@@ -2,15 +2,16 @@ import frontimage from "./images/frontimage.jpg";
 import { PiStudentFill } from "react-icons/pi";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { PiShoppingBagOpen } from "react-icons/pi";
+import Bronchure from "./Bronchure";
 
 const Home = () => {
   return (
     <>
       {/* Background Image Section */}
       <div
-        style={{ backgroundImage: `url(${frontimage})` }}
-        className="bg-cover bg-no-repeat h-[70vh] flex items-center justify-center relative"
-      >
+  style={{ backgroundImage: `url(${frontimage})` }}
+  className="bg-cover bg-center bg-no-repeat h-[70vh] flex items-center justify-center relative my-15"
+>
         {/* Optional overlay for better text visibility */}
         <div className="absolute inset-0 bg-black opacity-50"></div>
 
@@ -43,6 +44,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <Bronchure/>
     </>
   );
 };
