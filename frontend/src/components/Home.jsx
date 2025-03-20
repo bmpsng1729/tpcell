@@ -3,7 +3,10 @@ import { PiStudentFill } from "react-icons/pi";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { PiShoppingBagOpen } from "react-icons/pi";
 import Bronchure from "./Bronchure";
-
+import Dirmessage from "./DirMessage";
+import {Link} from "react-router-dom";
+import RecruitProcess from "./RecruitProcess";
+import Contact from "./Contact";
 const Home = () => {
   return (
     <>
@@ -29,10 +32,15 @@ const Home = () => {
 
           {/* Right Section with Gradient Background */}
           <div className="w-full md:w-1/2 flex flex-col items-center gap-4 p-6  rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-300">
-            <button className="bg-blue-500 text-white py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-600 transition-transform transform hover:scale-110 duration-300">
+          <Link to="/signup"> 
+          <button className="bg-blue-500 text-white py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-600 transition-transform transform hover:scale-110 duration-300">
               <PiStudentFill className="text-2xl" />
               <span className="text-xl">Student</span>
             </button>
+          </Link>
+
+          
+            
             <button className="bg-green-500 text-white py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-green-600 transition-transform transform hover:scale-110 duration-300">
               <FaChalkboardTeacher className="text-2xl" />
               <span className="text-xl">Coordinator</span>
@@ -45,6 +53,10 @@ const Home = () => {
         </div>
       </div>
       <Bronchure/>
+      <Dirmessage/>
+      <RecruitProcess/>
+      <Contact/>
+
     </>
   );
 };

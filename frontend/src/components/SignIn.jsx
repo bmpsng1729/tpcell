@@ -2,36 +2,23 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const SignUp = () => {
-  // inko baad me use karna hai
-  
- const {token}=useSelector(state=>state.auth);
+const SignIn = () => {
+// inko baad me use karna hai
+  const {token}=useSelector(state=>state.auth);
  const {user}=useSelector(state=>state.profile);
-
- 
-
-
   return (
+
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">Sign Up</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">Sign In</h2>
         
         <form className="space-y-4">
           <div>
-            <label className="block text-gray-600">Full Name</label>
-            <input
-              type="text"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your full name"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-gray-600">Email</label>
+            <label className="block text-gray-600">College Email</label>
             <input
               type="email"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter college email"
+              placeholder="Enter your college email"
             />
           </div>
           
@@ -48,16 +35,17 @@ const SignUp = () => {
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
           >
-            Sign Up
+            Sign In
           </button>
         </form>
         
         <p className="text-center text-gray-600 mt-4">
-          Already have an account? <Link to="/signin">sign In</Link>
+          Don't have an account? 
+          <Link to="/signup">signup</Link>
         </p>
       </div>
     </div>
   );
 };
 
-export default SignUp;
+export default SignIn;

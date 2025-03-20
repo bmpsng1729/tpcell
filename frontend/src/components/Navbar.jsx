@@ -1,5 +1,6 @@
   import nitlogo from "./images/nit logo.png";
   import { FaGripLines } from "react-icons/fa";
+  import { Link } from "react-router-dom";
  const Navbar=()=>{
  return(
     <>
@@ -15,9 +16,19 @@
     
     {/* <!-- Right Section --> */}
     <div class="flex space-x-6 text-lg font-medium mx-2">
-        <button class="hover:text-yellow-400 hover:cursor-pointer bg-transparent border-none focus:outline-none">Home</button>
+        <Link to="/">
+                <button class="hover:text-yellow-400 hover:cursor-pointer bg-transparent border-none focus:outline-none">Home</button>
+        </Link>
+ 
+        <Link to="/bronchure">
         <button class="hover:text-yellow-400 hover:cursor-pointer bg-transparent border-none focus:outline-none">Why Recruit</button>
+        </Link>
+        
+        <Link to="/dirmessage">
         <button class="hover:text-yellow-400 hover:cursor-pointer bg-transparent border-none focus:outline-none">Director's Message</button>
+        </Link>
+
+        
         <button class="hover:text-yellow-400 hover:cursor-pointer bg-transparent border-none focus:outline-none">Contact Us</button>
     </div>
 </nav>

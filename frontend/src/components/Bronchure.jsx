@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Bronchure = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -28,7 +29,7 @@ const Bronchure = () => {
         {/* Row container for cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Academic Facilities Card */}
-          <div className="bg-white shadow-lg rounded-lg p-6">
+          <div className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
             <h1 className="text-xl font-bold mb-2">Academic Facilities</h1>
             <p className="mb-4">
               {truncateText(
@@ -39,7 +40,7 @@ const Bronchure = () => {
               )}
             </p>
             <button
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors duration-300"
               onClick={() =>
                 handleKnowMore(
                   `NIT Jamshedpur offers excellent academic facilities that support learning, research, and innovation. The institute has well-equipped classrooms, modern laboratories, and a vast central library with a rich collection of books, journals, and digital resources. The library provides access to online databases, research papers, and e-books, enabling students to stay updated with the latest advancements in their fields.
@@ -53,7 +54,7 @@ const Bronchure = () => {
           </div>
 
           {/* Programs and Departments Card */}
-          <div className="bg-white shadow-lg rounded-lg p-6">
+          <div className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
             <h1 className="text-xl font-bold mb-2">Programs and Departments</h1>
             <p className="mb-4">
               {truncateText(
@@ -64,7 +65,7 @@ const Bronchure = () => {
               )}
             </p>
             <button
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors duration-300"
               onClick={() =>
                 handleKnowMore(
                   `NIT Jamshedpur offers a wide range of undergraduate, postgraduate, and doctoral programs through its various academic departments. The institute is known for its strong curriculum, research-driven approach, and industry-oriented learning.
@@ -89,38 +90,44 @@ const Bronchure = () => {
           </div>
 
           {/* Placement Brochure Card */}
-          <div className="bg-white shadow-lg rounded-lg p-6">
-    <h1 className="text-xl font-bold mb-2">Placement Brochure</h1>
-    
-    <div className="space-y-4">
-        <div className="flex items-center justify-between">
-            <p className="mb-4">Placement reports for 2024.</p>
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition">
-                View
-            </button>
-        </div>
-        <div className="flex items-center justify-between">
-            <p className="mb-4">Placement reports for 2023.</p>
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition">
-                View
-            </button>
-        </div>
-        <div className="flex items-center justify-between">
-            <p className="mb-4">Placement reports for 2022.</p>
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition">
-                View
-            </button>
-        </div>
-        <div className="flex items-center justify-between">
-            <p className="mb-4">Placement reports for 2021.</p>
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition">
-                View
-            </button>
-        </div>
-    </div>
-    
-    
-</div>
+          <div className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
+            <h1 className="text-xl font-bold mb-2">Placement Brochure</h1>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                
+                <p className="mb-4">Placement reports for 2024.</p>
+                
+                
+             <Link to="https://nitjsr.ac.in/backend/uploads/placements/Placement_Brochure_2024-25.pdf">
+             <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors duration-300">
+                  View
+                </button>
+             </Link>
+                
+                
+
+               
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="mb-4">Placement reports for 2023.</p>
+                <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors duration-300">
+                  View
+                </button>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="mb-4">Placement reports for 2022.</p>
+                <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors duration-300">
+                  View
+                </button>
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="mb-4">Placement reports for 2021.</p>
+                <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors duration-300">
+                  View
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -129,7 +136,7 @@ const Bronchure = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center pt-8 h-screen">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
             <button
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mb-4 transition"
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mb-4 transition-colors duration-300"
               onClick={handleClosePopup}
             >
               Close
