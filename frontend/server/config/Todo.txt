@@ -1,0 +1,29 @@
+done:-
+
+controller:-
+login 
+signup
+update profile
+authorization-auth,isstudent,isadmin
+company registration to db
+
+mark placed  a specific student
+show all placed student-(branch & year) wise
+
+
+todo:---------------------------------------------------------------------------
+show all visiting company
+top 20 student that have highest package
+
+  
+  for student dashboard:-
+  active application for student
+  upcoming events
+
+  for admin dashboard:
+  total student
+  total placed student  
+
+
+
+

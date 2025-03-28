@@ -12,17 +12,29 @@ const jwt=require("jsonwebtoken");
 
  exports.singup=async (req,res)=>{
      try{
-        const {email,password,cgpa,name,accountType,batch}=req.body;
+        const {email,password,cgpa,name,accountType,batch,branch}=req.body;
 
-        if(!email || !password || !name || !accountType || !cgpa || !batch){
+        if(!email || !password || !name || !accountType){
             return res.status(400).json(
                 {
                     message:"please fill the all the required fields and try again",
                     sucess:false
                    
                 }
-            )
-        }
+            );
+            
+        }// special for student user
+        if(accountType==="student"){
+          if( !cgpa || !batch){
+            return res.status(400).json(
+              {
+                  message:"Dear student! please fill the all the required fields and try again",
+                  sucess:false
+                 
+              }
+          );
+          }
+      }
 
         // return if email already exists
         const existingUser= await User.findOne(
@@ -105,6 +117,7 @@ const jwt=require("jsonwebtoken");
             batch,  
             additionalDetails:profileDetails,
             image:"",
+            branch
           
              
         }
@@ -173,7 +186,9 @@ const jwt=require("jsonwebtoken");
 
                     // send email of sucessfully logged in
                      const mailRes=mailSender(email,"about login to the tpcell","congratulation ,you are sucessfully Logged in");
+
                      console.log("mailresponse:,mail sent sucessfully",mailRes);
+                     
                     res.cookie("token", token, options).status(200).json({
                       success: true,
                       token,

@@ -1,5 +1,9 @@
 const mongoose=require("mongoose");
 const profileSchema= new mongoose.Schema({
+    // adding email for testing purpose
+    email:{
+        type:String
+    },
     gender:{
         type:String,
       
@@ -40,24 +44,21 @@ const profileSchema= new mongoose.Schema({
     },
     RegNo:{
         type:Number, 
-        required: true,
     },
      degree:{
         type:String,
-        enum: ['B.Tech', 'M.Tech', 'MBA', 'BBA', 'B.Com', 'M.Com', 'B.Sc', 'M.Sc', 'B.A', 'M.A', 'B.C.A', 'M.C.A', 'B.E', 'M.E', 'B.Arch', 'M.Arch', 'B.Pharm', 'M.Pharm', 'BDS', 'MDS', 'MBBS', 'MD', 'MS', 'BAMS', 'BHMS', 'BUMS', 'BPT', 'MPT', 'B.Sc Nursing', 'M.Sc Nursing', 'BBA LLB', 'LLB', 'LLM', 'Ph.D', 'Others'],
-        required:true,
+    
         default:"B.Tech",
 
      },
      batch:{
         type:Number,
-        required:true,
+
         // default:Date.now().getFullYear()-4,
         default:2021,
      },
      cgpa:{
         type:Number,
-        required:true,
         default:0,
      }     
     

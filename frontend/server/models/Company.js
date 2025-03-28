@@ -14,6 +14,15 @@ const companySchema=new mongoose.Schema(
             type:Number,
             required:true,
             default:2022
+        },
+        baseSalary:{
+            type:Number,
+            required:true,
+
+        },
+        ctc:{
+            type:Number,
+            required:true,
         }
     });
     module.exports=mongoose.model("company",companySchema);

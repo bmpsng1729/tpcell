@@ -4,9 +4,20 @@ import { FaChalkboardTeacher } from "react-icons/fa";
 import { PiShoppingBagOpen } from "react-icons/pi";
 import Bronchure from "./Bronchure";
 import Dirmessage from "./DirMessage";
+import RecruitProcess from "./RecruitProcess"
 import {Link} from "react-router-dom";
-import RecruitProcess from "./RecruitProcess";
+// Home
+import Companies from "./home/Companies";
+import About from "./home/About";
+// import Footer from "./layout/Footer"
+
+//student dashboard
+
+
+
+
 import Contact from "./Contact";
+import StudentDashboard from "./pages/StudentDashboard";
 const Home = () => {
   return (
     <>
@@ -53,9 +64,20 @@ const Home = () => {
         </div>
       </div>
       <Bronchure/>
+      <Companies/>
+      <About/>
       <Dirmessage/>
       <RecruitProcess/>
-      <Contact/>
+      {/* <Footer/> */}
+      <StudentDashboard/>
+
+   
+    
+    
+    
+   
+      
+
 
     </>
   );

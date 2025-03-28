@@ -20,7 +20,6 @@
       },
       cgpa:{
         type:Number,
-        required:true,
       },
       resume:{
         type:String
@@ -30,8 +29,14 @@
     default:false
     },
     batch:{
-        type:Number,required:true,
+        type:Number,
+        required:true,
         default:2022
+    },
+    branch:{
+      type:String,
+      default:"",
+      //enum:["cse,ece,mme,ce,me,ee"]  --mark all branch
     },
     token:{
         type:String, 
@@ -40,7 +45,7 @@
     resetPasswordExpires:{
         type:Date,
         default:0
-    },
+    },                                         
     image:{
         type:String,
 
@@ -50,5 +55,8 @@
 			required: true,
 			ref: "Profile",
 		},
+    ctc:{
+      
+    }
  });
 module.exports=mongoose.model("user",userSchema)

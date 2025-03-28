@@ -24,6 +24,9 @@ import StudentDashboard from './components/pages/StudentDashboard';
 import SignUp from './components/Signup';
 import SignIn from './components/SignIn';
 
+// student dashboard
+
+
 
 function App() {
 
@@ -35,6 +38,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route  path="/" element={<Home />}></Route>
+        
         <Route  path="/bronchure" element={<Bronchure />}></Route>
         <Route path="/dirmessage"element={<Dirmessage/>}></Route>
         {/* <Route path="/recprocess"element={<RecruitProcess/>}></Route> */}
