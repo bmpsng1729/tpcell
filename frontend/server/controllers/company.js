@@ -71,3 +71,42 @@ exports.deleteCompany=async(req,res)=>{
         });
      }
 };
+
+exports.showAllVisitedCompany=async(req,res)=>{
+    try{
+   // take data from the req body
+//    const {year}=req.body;
+//    if(!year){
+//     console.log("there is an erro while finding all the companies o a particular year");
+//     return res.status(400).json({
+//         message:"user has not provided the year ",
+//         success:false,
+
+//     });
+
+   //}
+    const allCompany=await company.find({});
+    if(!allCompany){
+        // yaha se start karna hai-register the company
+        console.log("there is an error in db error while finding all the companies");
+        
+    }
+    // validate 
+    console.log(allCompany);
+
+    // now show the all company 
+    // send a successull result
+    return res.status(200).json({
+        message:"we have successfully got the data of the company",
+        success:true,
+        allCompany:allCompany,
+    });
+    } catch(err){
+      console.log("there is an error in finding all companies");
+      return res.status(200).json({
+        message:"there is an server error while finding the companies",
+        success:false,
+      });
+    }
+ 
+}

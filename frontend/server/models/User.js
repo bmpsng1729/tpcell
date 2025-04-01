@@ -30,7 +30,6 @@
     },
     batch:{
         type:Number,
-        required:true,
         default:2022
     },
     branch:{

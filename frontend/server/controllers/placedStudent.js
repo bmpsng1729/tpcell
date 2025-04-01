@@ -1,4 +1,4 @@
-const  user  = require("../models/User");
+const  User  = require("../models/User");
 const placedStudent=require("../models/placedStudent");
 
 
@@ -131,5 +131,86 @@ exports.showAllPlacedStudentBatchwise=async(req,res)=>{
             message:"There is problem in showing all placed student",
             success:false
         });
+    }
+}
+
+exports.topPackageStudents = async (req, res) => {
+    try {
+        // Extract query params
+        const batch = parseInt(req.query.batch, 10);
+        //const topStudentsCount = parseInt(req.query.topStudentsCount, 10);
+
+        const topStudentsCount=parseInt(req.query.topStudentsCount, 10) || 20
+
+        console.log("Year:", batch);
+        console.log("Count:", topStudentsCount);
+
+        // Validate input
+        if (!batch || !topStudentsCount) {
+            console.log("Missing batch or topStudentsCount");
+            return res.status(400).json({
+                message: "Missing batch year or number of students",
+                success: false,
+            });
+        }
+
+        // Fetch top students
+        const allStudent = await placedStudent.aggregate([
+            {
+                $lookup: {
+                    from: "users", // Correct collection name
+                    localField: "id",
+                    foreignField: "_id",
+                    as: "placedStudentDetails"
+                }
+            },
+            { $unwind: "$placedStudentDetails" },
+            { $match: { "placedStudentDetails.batch": batch } },
+            { $sort: { "ctc": -1 } },
+            { $limit: topStudentsCount ||20 },
+            {
+                $project: {
+                    "placedStudentDetails.name": 1,
+                    "placedStudentDetails.batch": 1,
+                    "placedStudentDetails.branch": 1,
+                    "ctc": 1,
+                    "role": 1,
+                    "placementType": 1
+                }
+            }
+        ]);
+
+        // Check if students were found
+        if (!allStudent || allStudent.length === 0) {
+            console.log("No students found for this batch");
+            return res.status(404).json({
+                message: "No students found for the given batch",
+                success: false
+            });
+        }
+
+        console.log("Top placed students:", allStudent);
+
+        return res.status(200).json({
+            message: "Successfully fetched top placed students",
+            success: true,
+            allStudent
+        });
+    } catch (err) {
+        console.error("Error fetching top students:", err);
+        return res.status(500).json({
+            message: "Something went wrong while fetching top students",
+            success: false,
+        });
+    }
+};
+
+exports.totalPlacedStudent=async(req,res)=>{
+    try{
+            const year=req.params.year || 2022;
+            const allStudent=await placedStudent.find({})
+    }
+    catch(err){
+        
     }
 }

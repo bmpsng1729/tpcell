@@ -6,16 +6,13 @@ signup
 update profile
 authorization-auth,isstudent,isadmin
 company registration to db
-
 mark placed  a specific student
 show all placed student-(branch & year) wise
-
+top 20 student that have highest package placed student
 
 todo:---------------------------------------------------------------------------
-show all visiting company
-top 20 student that have highest package
+show all visiting company in a year
 
-  
   for student dashboard:-
   active application for student
   upcoming events
