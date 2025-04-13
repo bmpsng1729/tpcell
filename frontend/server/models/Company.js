@@ -1,4 +1,5 @@
 const mongoose=require("mongoose");
+const placedStudent = require("./placedStudent");
 
 const companySchema=new mongoose.Schema(
     {
@@ -13,7 +14,8 @@ const companySchema=new mongoose.Schema(
         visitingSince:{
             type:Number,
             required:true,
-            default:2022
+            // default: () => new Date().getFullYear()
+            default:2026
         },
         baseSalary:{
             type:Number,
@@ -23,6 +25,10 @@ const companySchema=new mongoose.Schema(
         ctc:{
             type:Number,
             required:true,
-        }
+        },
+        placedStudents:[{
+             type: mongoose.Schema.Types.ObjectId,
+               ref: "User",
+        }]
     });
     module.exports=mongoose.model("company",companySchema);

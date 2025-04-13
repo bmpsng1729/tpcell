@@ -6,18 +6,21 @@ import Bronchure from "./Bronchure";
 import Dirmessage from "./DirMessage";
 import RecruitProcess from "./RecruitProcess"
 import {Link} from "react-router-dom";
+
 // Home
-import Companies from "./home/Companies";
-import About from "./home/About";
 // import Footer from "./layout/Footer"
 
 //student dashboard
 
-
-
-
 import Contact from "./Contact";
 import StudentDashboard from "./pages/StudentDashboard";
+import AllCompaniesDetail from "./pages/admin/AllCompaniesDetail";
+import MarkPlaced from "./pages/admin/MarkPlaced";
+import BranchWisePlaced from "./pages/admin/BranchWisePlaced";
+import TopPackageStudent from "./pages/admin/TopPackageStudent";
+import Overview from "./pages/admin/Overview"
+import TopPlacedHomePage from "./ui/TopPlacedHomePage";
+
 const Home = () => {
   return (
     <>
@@ -64,12 +67,18 @@ const Home = () => {
         </div>
       </div>
       <Bronchure/>
-      <Companies/>
-      <About/>
+        <MarkPlaced/>
+        <AllCompaniesDetail/>
+        <BranchWisePlaced/>
+        <TopPackageStudent/>
+        <TopPlacedHomePage/>
+        <Overview/>
+      {/* <About/> */}
       <Dirmessage/>
+        
       <RecruitProcess/>
       {/* <Footer/> */}
-      <StudentDashboard/>
+      
 
    
     

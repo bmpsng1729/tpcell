@@ -7,6 +7,8 @@ const port=process.env.PORT || 4000;
 const userRoutes=require("./routes/User")
 const profileRoutes=require("./routes/Profile");
 const placedStudentsRoutes=require("./routes/placedStudent")
+const departmentRoutes=require("./routes/department");
+const studentsRoutes=require("./routes/students");
 
 const {connectCloudinary}=require("./config/cloudinary");
 const cors=require("cors");
@@ -50,5 +52,7 @@ app.listen(port,()=>{
 // all routes
 app.use("/api/v1/auth",userRoutes);
 app.use("/api/v1/profile",profileRoutes);
-app.use("/api/v1/company",companyRoutes);
+app.use("/api/v1/admin",companyRoutes);
 app.use("/api/v1/admin",placedStudentsRoutes);
+app.use("/api/v1/admin",departmentRoutes);
+app.use("/api/v1/admin",studentsRoutes);

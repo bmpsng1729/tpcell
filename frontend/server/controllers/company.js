@@ -3,7 +3,7 @@ const company = require("../models/Company");
 
 exports.registerCompany = async (req, res) => {
     try {
-        const email = req.user.email;
+        // const email = req.user.email;
         //take all the data from the company
         const { name, baseSalary, logo, ctc,visitingSince } = req.body;
 
@@ -43,9 +43,11 @@ exports.registerCompany = async (req, res) => {
 // send a sucessfull mail
 
       // return sucessfull message
+      console.log("registered companies",regCompany);
         return res.status(200).json({
             message:"Dear customer,company Registration Successfull",
             sucess:true,
+
         })
     }
     catch (error) {
@@ -72,20 +74,12 @@ exports.deleteCompany=async(req,res)=>{
      }
 };
 
-exports.showAllVisitedCompany=async(req,res)=>{
-    try{
-   // take data from the req body
-//    const {year}=req.body;
-//    if(!year){
-//     console.log("there is an erro while finding all the companies o a particular year");
-//     return res.status(400).json({
-//         message:"user has not provided the year ",
-//         success:false,
+exports.showAllVisitedCompanyYearwise=async(req,res)=>{
+    try{// showing companies year wise
+        const visitingYear = req.query.visitingYear || new Date().getFullYear();
 
-//     });
-
-   //}
-    const allCompany=await company.find({});
+     
+    const allCompany=await company.find({visitingSince:visitingYear});
     if(!allCompany){
         // yaha se start karna hai-register the company
         console.log("there is an error in db error while finding all the companies");
@@ -100,6 +94,7 @@ exports.showAllVisitedCompany=async(req,res)=>{
         message:"we have successfully got the data of the company",
         success:true,
         allCompany:allCompany,
+        companyCount:allCompany.length
     });
     } catch(err){
       console.log("there is an error in finding all companies");
@@ -109,4 +104,34 @@ exports.showAllVisitedCompany=async(req,res)=>{
       });
     }
  
+}
+
+exports.topRecruitingCompanies=async(req,res)=>{
+    try{
+        const companies = await company.find()
+        .sort({ ctc: -1, name: 1 }) // Sort by ctc in descending order, then by name in ascending order
+        .limit(20); // Get the highest package company
+      if(companies.length===0){
+        console.log("not able to find the companies");
+        return res.status(400).json({
+            message:"not able to find top companies",
+            success:false
+        });
+    }
+        console.log("top companies->",companies);
+
+        // return a successfull response
+        return res.status(200).json({
+            message:"top companies fetched successfully",
+           success:true,
+           companies:companies
+        })
+      
+    } catch(err){
+        console.log("there is an error in top recruiting company handler");
+        return res.status(400).json({
+         message:"there is an issue in finding total student",
+         success:false,
+        })
+    }
 }

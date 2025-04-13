@@ -7,6 +7,8 @@ const mongoose=require("mongoose");
 const { BiAccessibility } = require("react-icons/bi");
 const jwt=require("jsonwebtoken");
  const otpTemplate=require("../mail/emailVerificatioTemplate");
+const { findOne } = require("../models/department");
+const deparment=require("../models/department");
 
 
 
@@ -23,9 +25,10 @@ const jwt=require("jsonwebtoken");
                 }
             );
             
-        }// special for student user
+        }
+        // special for student user
         if(accountType==="student"){
-          if( !cgpa || !batch){
+          if( !cgpa || !batch || !branch){
             return res.status(400).json(
               {
                   message:"Dear student! please fill the all the required fields and try again",
@@ -33,7 +36,9 @@ const jwt=require("jsonwebtoken");
                  
               }
           );
+          
           }
+
       }
 
         // return if email already exists
@@ -51,6 +56,7 @@ const jwt=require("jsonwebtoken");
                 }
             )
         }
+        
         // check if email if of type nitjsr.ac.in
          const emailArray=email.split("@");
          const domain=emailArray[1];
@@ -105,8 +111,8 @@ const jwt=require("jsonwebtoken");
       
       //  converting into the type fo
       //profileDetails= new mongoose.Types.ObjectId(profileDetails);
-      // now create entry into the database
 
+      // now create entry into the database
       const user=await User.create(
         {
             email,
@@ -121,7 +127,21 @@ const jwt=require("jsonwebtoken");
           
              
         }
+
+        // store the id of the student in the specific branch
+      
       );
+      const branchFromDb=await deparment.findOneAndUpdate({deptName:branch},
+        {
+          $push:{students:user._id},
+        },
+        {
+          new:true,
+        }
+      );
+
+      // now if the user is student then push him into the department of the student
+      console.log("branch from db->",branchFromDb);
       return res.status(200).json(
         {
             sucess:true,

@@ -25,7 +25,15 @@ import SignUp from './components/Signup';
 import SignIn from './components/SignIn';
 
 // student dashboard
-
+   
+// admin dashboard
+import ProSidebar from './components/dashboard/admin/ProSidebar';
+import Students from './components/pages/admin/Students';
+import Reports from './components/pages/admin/Reports';
+import Drives from './components/pages/admin/Drives';
+import Companies from './components/pages/admin/Companies';
+import Dashboard from './components/dashboard/admin/Dashboard';
+import Layout from './components/pages/admin/Layout';
 
 
 function App() {
@@ -45,7 +53,17 @@ function App() {
       
         <Route path="/signup" element={<SignUp/>}></Route>
         <Route path="/signin" element={<SignIn/>}></Route>
+         
 
+         {/* admin dashborard and pages */}
+         <Route path="/admin" element={<Layout/>}/>
+         <Route path="/admin/dashboard" element={<Dashboard/>}/>
+         <Route path="/admin/students" element={<Students/>}/>
+         <Route path="/admin/students" element={<Students/>}/>
+         <Route path="/admin/reports" element={<Reports/>}/>
+         <Route path="/admin/drives" element={<Drives/>}/>
+         <Route path="/admin/companies" element={<Companies/>}/>
+         
 
         <Route path="/registrationform" element={<RegistrationForm/>}></Route>
 
@@ -55,6 +73,8 @@ function App() {
         <Route path='/upcomingcompanies' element={<UpcomingCompanies/>}></Route>
         <Route path='/markeddate' element={<MarkedDate/>}></Route>
         <Route path='/studentdashboard' element={<StudentDashboard/>}></Route>
+
+       
 
 
       </Routes>

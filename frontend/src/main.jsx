@@ -7,6 +7,7 @@ import App from './App.jsx'
  import rootReducer from './reducer/index.jsx'
  import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
  const store= configureStore({
   reducer:rootReducer,
 });
@@ -14,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 createRoot(document.getElementById('root')).render(
    <Provider store={store}>
     <StrictMode>
+
     <App />
     <ToastContainer
         position="top-center"
