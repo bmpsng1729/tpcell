@@ -8,13 +8,17 @@ const { BiAccessibility } = require("react-icons/bi");
 const jwt=require("jsonwebtoken");
  const otpTemplate=require("../mail/emailVerificatioTemplate");
 const { findOne } = require("../models/department");
-const deparment=require("../models/department");
+const department=require("../models/department");
+const { data } = require("react-router-dom");
 
 
 
  exports.singup=async (req,res)=>{
      try{
-        const {email,password,cgpa,name,accountType,batch,branch}=req.body;
+        const {email,password,cgpa,name,accountType,branch}=req.body;
+               
+              const batch = new Date().getFullYear()-4;
+          
 
         if(!email || !password || !name || !accountType){
             return res.status(400).json(
@@ -29,6 +33,10 @@ const deparment=require("../models/department");
         // special for student user
         if(accountType==="student"){
           if( !cgpa || !batch || !branch){
+            console.log(cgpa)
+             console.log(batch)
+              console.log(branch)
+            
             return res.status(400).json(
               {
                   message:"Dear student! please fill the all the required fields and try again",
@@ -123,7 +131,7 @@ const deparment=require("../models/department");
             batch,  
             additionalDetails:profileDetails,
             image:"",
-            branch
+            branch:branch
           
              
         }
@@ -131,22 +139,25 @@ const deparment=require("../models/department");
         // store the id of the student in the specific branch
       
       );
-      const branchFromDb=await deparment.findOneAndUpdate({deptName:branch},
+      if(accountType==="student"){
+       const branchFromDb=await department.findOneAndUpdate({deptName:branch},
         {
           $push:{students:user._id},
         },
         {
           new:true,
         }
-      );
+      ); 
+      }
+      
 
       // now if the user is student then push him into the department of the student
-      console.log("branch from db->",branchFromDb);
       return res.status(200).json(
         {
             sucess:true,
             user,
-            message:"user is registered sucessfuylly"
+            message:"user is registered sucessfuylly",
+        
         }
       )
         

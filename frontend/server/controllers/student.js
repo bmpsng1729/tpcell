@@ -1,15 +1,19 @@
 const  User  = require("../models/User");
+const placedStudent=require("../models/placedStudent");
 const mailSender=require("../utils/mailSender");
 exports.totalStudent=async(req,res)=>{
     try{
-             const year=parseInt(req.query.year,10);
-             const batch=year-3;  // bas checking ke liye
+            //  const year=parseInt(req.query.year,10);
+            const year=new Date().getFullYear();
+             const batch=year-4;  // bas checking ke liye
         const allStudent= await User.find({accountType:"student",batch:batch});
         if(allStudent.length===0){
             console.log("its seems like no student found the database")
             return res.status(400).json({
                 message:"its seems like there is no user in the database",
-                success:false
+                success:false,
+                year,
+                batch
             });
         }
         // console.log("all student->",allStudent);
@@ -127,5 +131,65 @@ exports.sendOaLink = async (req, res) => {
         });
     }
 };
+
+
+exports.annualReport = async (req, res) => {
+  try {
+    const currentBatch = new Date().getFullYear()-4;
+
+    // Step 1: Get all students from the current batch
+    const students = await User.find({
+      accountType: "student",
+      batch: currentBatch
+    });
+
+    // Step 2: Get all placed students and map them by user ID
+    const placements = await placedStudent.find().populate("id");
+
+    const placementMap = new Map();
+    for (const placement of placements) {
+      const user = placement.id;
+      if (user && user.batch === currentBatch && user.accountType === "student") {
+        placementMap.set(user._id.toString(), placement);
+      }
+    }
+    
+
+    // Step 3: Create the report
+    const report = students.map(student => {
+      const placementInfo = placementMap.get(student._id.toString()) || null;
+
+      return {
+        name: student.name,
+        email: student.email,
+        branch: student.branch,
+        cgpa: student.cgpa,
+        isPlaced: student.isplaced,
+        ctc: placementInfo ? placementInfo.ctc : null,
+        company: placementInfo ? placementInfo.company : null,
+        role: placementInfo ? placementInfo.role : null,
+        placementType: placementInfo ? placementInfo.placementType : null
+      };
+    });
+
+    console.log(report);
+    console.log("students",students);
+    res.status(200).json({
+      success: true,
+      batch: currentBatch,
+      totalStudents: students.length,
+      placedStudents: report.filter(s => s.isPlaced).length,
+      data: report
+    });
+  } catch (err) {
+    console.error("Error in finding student report:", err);
+    res.status(500).json({
+      success: false,
+      message: "Failed to generate annual report",
+      error: err.message
+    });
+  }
+};
+
 
 

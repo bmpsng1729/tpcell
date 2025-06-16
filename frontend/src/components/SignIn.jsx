@@ -1,92 +1,125 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { login as authLogin } from "../slices/authSlice";
+import { Button, Input, Logo, Select } from '../index'
+import { useDispatch } from "react-redux"
+// import authService from "../appwrite/auth"
+import { useForm } from "react-hook-form"
 import { toast } from "react-toastify";
-const SignIn = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+import { useSelector } from "react-redux";
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+function SignIn() {
+  const token = useSelector((state) => state.auth.token);
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { register, handleSubmit } = useForm()
+  const [error, setError] = useState("")
+
+
+  const login = async (data) => {
+    setError("")
     try {
+      // const session = await authService.login(data)   /// make a backend call
+
       const response = await fetch("http://localhost:4000/api/v1/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       });
 
-      const data = await response.json();
+      const datas = await response.json();
+
+
 
       if (!response.ok) {
-      toast.error(data.message || "something went wrong! try again");
+        toast.error(datas.message || "something went wrong! try again");
       }
 
-  
-        else{
-          toast.success('🦄 logged in successfully')
+
+      else {
+       
+        dispatch(authLogin(datas));
+    // saving token  into the localstorage
+    console.log("token", JSON.stringify(datas.token));
+        localStorage.setItem("token", JSON.stringify(datas.token));
+         localStorage.setItem("userData", JSON.stringify(datas.user));
+         console.log("userData",data.user);
+        
+        toast.success('🦄 logged in successfully');
+
+        if (datas.user.accountType === 'student') {
+          navigate('/studentdashboard')
         }
-  
+        if (datas.user.accountType === "admin") {
+          navigate('/admin/dashboard');
+        }
+
+
+      }
+
+
+
+      // if (session) {
+      //   // const userData = await authService.getCurrentUser()
+      //   if (userData) dispatch(authLogin(userData));
+      //   navigate("/")
+      // }
     } catch (error) {
-      alert(error.message);
+      setError(error.message)
     }
-  };
+  }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 via-purple-500 to-indigo-600 p-6 w-full overflow-hidden">
-      <div className="w-full max-w-lg bg-white p-10 rounded-2xl shadow-2xl transform transition duration-500 hover:scale-105 overflow-hidden">
-        <h2 className="text-3xl font-bold text-center text-gray-700 mb-6">Sign In</h2>
-        
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div>
-            <label className="block text-gray-600 font-medium">College Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-100"
-              placeholder="Enter your college email"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-gray-600 font-medium">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-100"
-              placeholder="Enter your password"
-            />
-          </div>
-          
-          <button
-            type="submit"
-            className="w-full bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 text-white py-3 rounded-lg font-semibold text-lg hover:opacity-90 transition shadow-md"
+    <div className="flex items-center justify-center min-h-screen w-full bg-gray-50">
+      <div className="mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10 shadow-lg">
+        <div className="mb-2 flex justify-center">
+          <span className="inline-block w-full max-w-[100px]">
+            <Logo width="100%" />
+          </span>
+        </div>
+        <h2 className="text-center text-2xl font-bold leading-tight">Sign in to your account</h2>
+        <p className="mt-2 text-center text-base text-black/60">
+          Don&apos;t have any account?&nbsp;
+          <Link
+            to="/signup"
+            className="font-medium text-primary transition-all duration-200 hover:underline"
           >
-            Sign In
-          </button>
-        </form>
-        
-        <p className="text-center text-gray-600 mt-6">
-          Don't have an account? <Link to="/signup" className="text-purple-600 font-semibold hover:underline">Sign Up</Link>
+            Sign Up
+          </Link>
         </p>
+        {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
+        <form onSubmit={handleSubmit(login)} className="mt-8">
+          <div className="space-y-5">
+            <Input
+              label="Email: "
+              placeholder="Enter your email"
+              type="email"
+              {...register("email", {
+                required: true,
+              })}
+            />
+            <Input
+              label="Password: "
+              type="password"
+              placeholder="Enter your password"
+              {...register("password", {
+                required: true,
+              })}
+            />
+            <Button type="submit" className="w-full">
+              Sign in
+            </Button>
+          </div>
+        </form>
       </div>
     </div>
   );
-};
 
-export default SignIn;
+}
+
+export default SignIn

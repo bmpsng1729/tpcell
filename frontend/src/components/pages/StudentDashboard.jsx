@@ -5,7 +5,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 
 const StudentDashboard = () => {
   return (
-    <div className="w-full h-screen flex bg-gray-100">
+    <div className="w-full h-screen flex bg-gray-100 mt-14">
       {/* Sidebar */}
       <div className="w-1/5 bg-white shadow-lg p-5 flex flex-col space-y-4">
         <Link to="/companydetailscard">

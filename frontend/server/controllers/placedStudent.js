@@ -84,7 +84,7 @@ exports.markPlaced=async(req,res)=>{
 };
 
 exports.showAllPlacedStudentBatchwise=async(req,res)=>{
-    try{     const {batch}=parseInt(req.query.batch,10)-3||2022;
+    try{     const batch=parseInt(req.query.batch,10)-4||new Date().getFullYear()-4;
              // you have to verify that user is a admin
               // take all users from the 
               if(!batch){
@@ -106,8 +106,8 @@ exports.showAllPlacedStudentBatchwise=async(req,res)=>{
                 { $unwind: "$placedStudentDetails" },
                 {
                     $match: { 
-                        "placedStudentDetails.batch": req.body.batch, 
-                        "placedStudentDetails.branch": req.body.branch
+                        "placedStudentDetails.batch": batch, 
+                        
                     }
                 },
                 {
@@ -152,10 +152,10 @@ exports.topPackageStudents = async (req, res) => {
     try {
         // Extract query params
         console.log("batch from query",req.query.batch);
-  const batch= parseInt(req.query.batch )|| new Date().getFullYear()-3;
+  const batch= parseInt(req.query.batch )|| new Date().getFullYear()-4;
         //const topStudentsCount = parseInt(req.query.topStudentsCount, 10);
 
-        const topStudentsCount=parseInt(req.query.topStudentsCount, 10) || 10
+        const topStudentsCount=parseInt(req.query.topStudentsCount, 10) || 12
 
         console.log("Year:", batch);
         console.log("Count:", topStudentsCount);
@@ -284,7 +284,7 @@ exports.averagePackageYearwise=async(req,res)=>{
         //finding batch from the query parameter
         //find all student of the batch and find average
         //return the successfull result
-        const batch=parseInt(req.query.batch,10)|| new Date().getFullYear()-3;
+        const batch=parseInt(req.query.batch,10)|| new Date().getFullYear()-4;
         console.log(batch);
         const avgPlacement = await placedStudent.aggregate([
             {
@@ -323,7 +323,7 @@ exports.averagePackageYearwise=async(req,res)=>{
          return res.status(200).json({
             message:"data fetched sucesssfully",
             success:true,
-            avgCTC:Number(avgPlacement[0].averageCTC.toFixed(2)),
+            avgCTC: Number((avgPlacement[0]?.averageCTC ?? 0).toFixed(2)),
          })
           
 
@@ -337,7 +337,8 @@ exports.averagePackageYearwise=async(req,res)=>{
 
 exports.pieChartViewData=async(req,res)=>{
     try{
-        const batch=new Date().getFullYear()-3;
+       const batch=new Date().getFullYear()-4;
+      
         // now get the data from the db
 
 const data = await placedStudent.aggregate([
@@ -388,16 +389,21 @@ if(data.length===0){
         success:false
     });
 }
-// process the data
-const processedData=[
-    data[0].count,data[1].count,data[2].count,data[3].count
-];
-console.log(processedData);
+const processedData = [0, 0, 0, 0]; // default values
+
+data.forEach(bucket => {
+  if (bucket._id === 0) processedData[0] = bucket.count;
+  else if (bucket._id === 10) processedData[1] = bucket.count;
+  else if (bucket._id === 20) processedData[2] = bucket.count;
+  else if (bucket._id === 30) processedData[3] = bucket.count;
+});
+
+console.log("data",data);
  // return a successfull message
  return res.status(200).json({
     message:"data fetched successfully",
     success:true,
-    processedData
+     processedData
  })
     }
     catch(err){

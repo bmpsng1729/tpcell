@@ -21,7 +21,7 @@ function StudentDetails() {
     },
     {
       title: 'Registered Students',
-      value: '1,254',
+      value: '0',
       change: 8.2,
       icon: UsersIcon,
       color: { bg: 'bg-gradient-to-br from-green-500 to-teal-600', text: 'text-green-500' },
@@ -29,7 +29,7 @@ function StudentDetails() {
     },
     {
       title: 'Companies Visited',
-      value: '48',
+      value: '0',
       change: 15.3,
       icon: BriefcaseIcon,
       color: { bg: 'bg-gradient-to-br from-purple-500 to-fuchsia-600', text: 'text-purple-500' },
@@ -37,7 +37,7 @@ function StudentDetails() {
     },
     {
       title: 'Average Package',
-      value: '12.5 LPA',
+      value: '0 LPA',
       change: 5.7,
       icon: AcademicCapIcon,
       color: { bg: 'bg-gradient-to-br from-amber-500 to-orange-600', text: 'text-amber-500' },
@@ -82,7 +82,7 @@ function StudentDetails() {
 
     const fetchPlacedStudent=async()=>{
       try {
-        const response = await fetch(`http://localhost:4000/api/v1/admin/totalplacedstudent?year=${currentYear}`, {
+        const response = await fetch(`http://localhost:4000/api/v1/admin/showallstudentbatchwise`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         });

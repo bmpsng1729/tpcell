@@ -23,6 +23,13 @@ import {
   TrashIcon,
   EllipsisVerticalIcon
 } from '@heroicons/react/24/outline'
+import BranchStats from './BranchStats';
+import StudentStats from './StudentStats';
+import AnalyticsDashboard from './reports/AnalyticsDashboard';
+import {fetchAnnualReportData} from "./reports/FetchAnnualReport"; 
+import { toast } from "react-hot-toast";
+import Spreadsheet from "react-spreadsheet";
+import * as XLSX from "xlsx";
 
 const Reports = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -33,27 +40,84 @@ const Reports = () => {
   const [showShareModal, setShowShareModal] = useState(false);
   const [sharedEmails, setSharedEmails] = useState('');
 
+
+
+  // making spreadsheet
+  const [spreadsheetData, setSpreadsheetData] = useState(null);
+  const generateSpreadsheet = async () => {
+    try {
+      const data = await fetchAnnualReportData();
+      const headers = [
+        { value: "Name" },
+        { value: "Email" },
+        { value: "Branch" },
+        { value: "CGPA" },
+        { value: "Placed" },
+        { value: "CTC" },
+        { value: "Company" },
+        { value: "Role" },
+        { value: "Placement Type" },
+      ];
+      const rows = data.map((student) => [
+        { value: student.name },
+        { value: student.email },
+        { value: student.branch },
+        { value: student.cgpa },
+        { value: student.isPlaced ? "Yes" : "No" },
+        { value: student.ctc },
+        { value: student.company },
+        { value: student.role },
+        { value: student.placementType },
+      ]);
+
+      setSpreadsheetData([headers, ...rows]);
+      toast.success("Report loaded in spreadsheet!");
+    } catch (err) {
+      toast.error("Unable to generate report");
+    }
+  };
+  // download spreadsheet
+  const downloadSpreadsheet = () => {
+    if (!spreadsheetData) return;
+  
+    // Step 1: Convert `react-spreadsheet` format to a 2D array
+    const sheetArray = spreadsheetData.map(row =>
+      row.map(cell => (cell?.value !== undefined ? cell.value : ""))
+    );
+  
+    // Step 2: Create a worksheet and workbook
+    const worksheet = XLSX.utils.aoa_to_sheet(sheetArray);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Annual Report");
+  
+    // Step 3: Trigger download
+    XLSX.writeFile(workbook, "Annual_Report.xlsx");
+  };
+
   const reportCards = [
     {
       title: 'Annual Placement Report',
       description: 'Comprehensive analysis of yearly placements with trends and comparisons',
       icon: DocumentChartBarIcon,
       color: 'bg-gradient-to-br from-blue-500 to-indigo-600',
-      textColor: 'text-blue-500'
+      textColor: 'text-blue-500',
+      onClick: generateSpreadsheet
     },
     {
       title: 'Branch-wise Analysis',
       description: 'Detailed performance metrics across all academic branches',
       icon: ChartPieIcon,
       color: 'bg-gradient-to-br from-purple-500 to-fuchsia-600',
-      textColor: 'text-purple-500'
+      textColor: 'text-purple-500',
+      onClick: generateSpreadsheet
     },
     {
       title: 'Company Statistics',
       description: 'Recruiter performance metrics and hiring patterns',
       icon: TableCellsIcon,
       color: 'bg-gradient-to-br from-amber-500 to-orange-600',
-      textColor: 'text-amber-500'
+      textColor: 'text-amber-500',  
+       onClick: generateSpreadsheet
     },
   ]
 
@@ -251,6 +315,40 @@ const Reports = () => {
       </div>
 
       {/* Report Cards */}
+      {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {reportCards.map((report, index) => (
+          <div key={index} className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-gray-100">
+            <div className="p-5">
+              <div className={`p-3 rounded-lg ${report.color} text-white shadow-inner inline-block mb-4`}>
+                <report.icon className="h-6 w-6" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">{report.title}</h3>
+              <p className="text-sm text-gray-500 mb-4">{report.description}</p>
+              <div className="flex justify-between items-center">
+                <button
+                 onClick={report.onClick}
+                className={`text-sm font-medium ${report.textColor} hover:underline flex items-center`}>
+                  Generate Report
+                  <svg className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+                <div className="flex space-x-2">
+                  <button className="text-gray-400 hover:text-blue-500">
+                    <ClockIcon className="h-4 w-4" />
+                  </button>
+                  <button className="text-gray-400 hover:text-blue-500">
+                    <ShareIcon className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div> */}
+
+      {/* new add kar rha hun */}
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {reportCards.map((report, index) => (
           <div key={index} className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-gray-100">
@@ -261,7 +359,10 @@ const Reports = () => {
               <h3 className="text-lg font-semibold text-gray-800 mb-2">{report.title}</h3>
               <p className="text-sm text-gray-500 mb-4">{report.description}</p>
               <div className="flex justify-between items-center">
-                <button className={`text-sm font-medium ${report.textColor} hover:underline flex items-center`}>
+                <button
+                  onClick={report.onClick}
+                  className={`text-sm font-medium ${report.textColor} hover:underline flex items-center`}
+                >
                   Generate Report
                   <svg className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -280,6 +381,30 @@ const Reports = () => {
           </div>
         ))}
       </div>
+{/*      
+     showing preview */}
+      {/* {spreadsheetData && (
+        <div className="mt-10 bg-white p-4 rounded-lg shadow overflow-auto">
+          <h2 className="text-xl font-semibold mb-4">Report Preview</h2>
+          <Spreadsheet data={spreadsheetData} onChange={setSpreadsheetData} />
+        </div>
+      )} */}
+
+      {/* button to download */}
+      {spreadsheetData && (
+  <div className="mt-6">
+    <button
+      onClick={downloadSpreadsheet}
+      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md shadow-md"
+    >
+      Download as Excel
+    </button>
+
+    <div className="mt-4">
+      <Spreadsheet data={spreadsheetData} onChange={setSpreadsheetData} />
+    </div>
+  </div>
+)}
 
       {/* Upcoming Reports Section */}
       <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
@@ -409,122 +534,8 @@ const Reports = () => {
       </div>
 
       {/* Analytics Dashboard */}
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
-        <div className="p-5 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-            <h3 className="text-lg font-semibold text-gray-800 flex items-center">
-              <ChartBarIcon className="h-5 w-5 text-indigo-600 mr-2" />
-              Analytics Dashboard
-            </h3>
-            <div className="flex items-center space-x-3">
-              <div className="flex border border-gray-300 rounded-lg divide-x divide-gray-300">
-                {['weekly', 'monthly', 'yearly'].map((range) => (
-                  <button
-                    key={range}
-                    className={`px-3 py-1 text-sm capitalize ${timeRange === range ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50'}`}
-                    onClick={() => setTimeRange(range)}
-                  >
-                    {range}
-                  </button>
-                ))}
-              </div>
-              <button className="px-3 py-1 text-sm border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
-                Export Data
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="p-5">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            {/* Placement Trends */}
-            <div className="bg-gray-50 rounded-lg p-4 h-80">
-              <div className="flex justify-between items-center mb-4">
-                <h4 className="font-medium text-gray-800">Placement Trends</h4>
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                  <span className="text-xs text-gray-600">Placements</span>
-                </div>
-              </div>
-              <div className="flex items-end space-x-2 h-48 mt-6">
-                {analyticsData.placementTrends.map((data, index) => (
-                  <div key={index} className="flex-1 flex flex-col items-center">
-                    <div 
-                      className="w-full bg-gradient-to-t from-blue-500 to-blue-300 rounded-t hover:from-blue-600 hover:to-blue-400 transition-all"
-                      style={{ height: `${data.placements}px` }}
-                    ></div>
-                    <span className="text-xs text-gray-500 mt-2">{data.year}</span>
-                    <span className="text-xs font-medium text-blue-600">{data.placements}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* CTC Distribution */}
-            <div className="bg-gray-50 rounded-lg p-4 h-80">
-              <div className="flex justify-between items-center mb-4">
-                <h4 className="font-medium text-gray-800">CTC Distribution</h4>
-                <div className="flex items-center space-x-2">
-                  <CurrencyDollarIcon className="h-4 w-4 text-amber-500" />
-                  <span className="text-xs text-gray-600">Package (LPA)</span>
-                </div>
-              </div>
-              <div className="grid grid-cols-4 gap-4 h-48 mt-6">
-                {analyticsData.ctcDistribution.map((data, index) => (
-                  <div key={index} className="flex flex-col items-center justify-end">
-                    <div className="w-full flex flex-col items-center">
-                      <div 
-                        className="w-3/4 bg-gradient-to-t from-amber-500 to-amber-300 rounded-t hover:from-amber-600 hover:to-amber-400 transition-all"
-                        style={{ height: `${data.students * 2}px` }}
-                      ></div>
-                      <span className="text-xs text-gray-500 mt-2">{data.range}</span>
-                      <span className="text-xs font-medium text-amber-600">{data.students}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          
-          {/* Branch Performance Table */}
-          <div className="mt-6 bg-gray-50 rounded-lg p-4">
-            <h4 className="font-medium text-gray-800 mb-4">Branch Performance</h4>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead>
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Branch</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Placements</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg. CTC (LPA)</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">% of Total</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {analyticsData.branchPerformance.map((branch, index) => (
-                    <tr key={index} className="hover:bg-gray-50">
-                      <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{branch.branch}</td>
-                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                        <div className="flex items-center">
-                          <div className="w-16 bg-gray-200 rounded-full h-2 mr-2">
-                            <div 
-                              className="bg-blue-500 h-2 rounded-full" 
-                              style={{ width: `${(branch.placements / 142) * 100}%` }}
-                            ></div>
-                          </div>
-                          {branch.placements}
-                        </div>
-                      </td>
-                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{branch.avgCTC}</td>
-                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                        {Math.round((branch.placements / 142) * 100)}%
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+      
+      <AnalyticsDashboard/>
 
       {/* Report Preview Modal */}
       {showReportModal && selectedReport && (

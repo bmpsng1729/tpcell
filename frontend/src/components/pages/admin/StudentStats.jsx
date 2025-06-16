@@ -33,21 +33,26 @@ const StudentStats = () => {
         
         <div className="flex-1 overflow-y-auto pr-2">
           <div className="space-y-4">
-            {branchData.map((data, index) => {
-              const placementPercentage = Math.round((data.placed / data.total) * 100)
-              
-              return (
-                <div key={index} className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="font-medium text-secondary-800">{data.branch}</span>
-                    <span className="text-sm text-secondary-500">
-                      {data.placed}/{data.total} ({placementPercentage}%)
-                    </span>
-                  </div>
-                     <hr></hr>
-                </div>
-              )
-            })}
+          {branchData?.length > 0 ? (
+  branchData.map((data, index) => {
+    const placementPercentage = Math.round((data.placed / data.total) * 100);
+
+    return (
+      <div key={index} className="space-y-2">
+        <div className="flex justify-between items-center">
+          <span className="font-medium text-secondary-800">{data.branch}</span>
+          <span className="text-sm text-secondary-500">
+            {data.placed}/{data.total} ({placementPercentage}%)
+          </span>
+        </div>
+        <hr />
+      </div>
+    );
+  })
+) : (
+  <p className="text-secondary-500 italic">No data available.</p>
+)}
+
           </div>
         </div>
       </div>

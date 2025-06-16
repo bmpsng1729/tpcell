@@ -884,7 +884,7 @@ const matchesPackage = student.status !== 'Placed' ||
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {stats.map((stat, index) => (
           <div key={index} className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-gray-100">
             <div className="p-5">
@@ -906,10 +906,10 @@ const matchesPackage = student.status !== 'Placed' ||
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
 
       {/* Branch-wise Placement Stats */}
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+      {/* <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
         <div className="p-5 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
           <h3 className="text-lg font-semibold text-gray-800 flex items-center">
             <ChartBarIcon className="h-5 w-5 text-indigo-600 mr-2" />
@@ -939,7 +939,7 @@ const matchesPackage = student.status !== 'Placed' ||
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Filters and Search */}
       <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">

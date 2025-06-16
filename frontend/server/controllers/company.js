@@ -76,10 +76,10 @@ exports.deleteCompany=async(req,res)=>{
 
 exports.showAllVisitedCompanyYearwise=async(req,res)=>{
     try{// showing companies year wise
-        const visitingYear = req.query.visitingYear || new Date().getFullYear();
+        const visitingYear = req.query.visitingYear || new Date().getFullYear()-4;
 
      
-    const allCompany=await company.find({visitingSince:visitingYear});
+    const allCompany=await company.find({});
     if(!allCompany){
         // yaha se start karna hai-register the company
         console.log("there is an error in db error while finding all the companies");

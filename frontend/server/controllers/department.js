@@ -62,7 +62,7 @@ exports.createDepartment = async (req, res) => {
 exports.averagePackageBranchwise=async(req,res)=>{
     try{
 
-       const batch= new Date().getFullYear()-3; // baad me isko 4 kar denna 
+       const batch= new Date().getFullYear()-4; // baad me isko 4 kar denna 
        // chai ,av data hm isi ka daale hai isliye
        console.log(batch)
        const result = await department.aggregate([
@@ -166,7 +166,7 @@ exports.placementPercentageBranchwise=async(req,res)=>{
   try{
         // find the branch
         // find the data from the db
-        const batch=new Date().getFullYear()-3;
+        const batch=new Date().getFullYear()-4;
        const response=await user.aggregate([
         {
           $match: {
@@ -215,3 +215,113 @@ return res.status(400).json({
 });
   }
 }
+
+exports.lastFourBatchwiseCount = async (req, res) => {
+  try {
+    const currBatch = new Date().getFullYear() - 4;
+
+    const batchStats = await user.aggregate([
+      {
+        $match: {
+          batch: { $gte: currBatch-3, $lte: currBatch  },
+          isplaced:true
+          
+        },
+      },
+      {
+        $group: {
+          _id: "$batch",
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { _id: 1 }, // Sort by batch year ascending
+      },
+    ]);
+
+    // Fill missing years with 0 count
+    const result = [];
+    for (let i = 0; i < 4; i++) {
+      const year = currBatch - i;
+      const data = batchStats.find(stat => stat._id === year);
+      result.push({
+        year,
+        count: data ? data.count : 0,
+      });
+    }
+
+    return res.status(200).json({
+      message:"last 4 batch total placed found successfully",
+      success: true,
+      data: result,
+    });
+
+  } catch (err) {
+    console.log("Error in finding last four year batch counts:", err);
+    return res.status(400).json({
+      message: "Not able to find last 4 year batch counts",
+      success: false,
+    });
+  }
+};
+exports.lastFourBatchAverage = async (req, res) => {
+  try {
+    const currBatch = new Date().getFullYear() - 4;
+    const batchStats = await placedStudent.aggregate([
+      {
+        $lookup: {
+          from: "users", // Make sure this is the actual collection name in MongoDB (plural + lowercase)
+          localField: "id",
+          foreignField: "_id",
+          as: "userDetails"
+        }
+      },
+      {
+        $unwind: "$userDetails"
+      },
+      {
+        $match: {
+          "userDetails.batch": { $gte: currBatch - 3, $lte: currBatch },
+          ctc: { $ne: null },
+          
+        }
+      },
+      {
+        $group: {
+          _id: "$userDetails.batch",
+          averageCTC: { $avg: "$ctc" }
+        }
+      },
+      {
+        $sort: { _id: 1 }
+      }
+    ]);
+
+    // Fill missing years with 0 average
+    const result = [];
+    for (let i = 0; i < 4; i++) {
+      const year = currBatch - i;
+      const data = batchStats.find(stat => stat._id === year);
+      result.push({
+        year,
+        averageCTC: data ? parseFloat(data.averageCTC.toFixed(2)) : 0
+      });
+    }
+
+    return res.status(200).json({
+      message: "Last 4 batch average CTC fetched successfully",
+      success: true,
+      data: result
+    });
+
+  } catch (err) {
+    console.error("Error in finding last four year average CTC:", err);
+    return res.status(400).json({
+      message: "Unable to find last 4 year average CTC",
+      success: false
+    });
+  }
+};
+
+
+

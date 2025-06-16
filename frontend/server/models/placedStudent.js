@@ -4,12 +4,13 @@ const mongoose=require("mongoose");
 const placedSchema=new mongoose.Schema({
     id:{
         type:mongoose.Schema.Types.ObjectId,
-        Ref:"User",
+        ref:"user",
         required:true
     },
     company:{
          type:String,
          required:true
+        
     },
     description:{
         type:String,

@@ -34,8 +34,8 @@
     },
     branch:{
       type:String,
-      default:"",
-      //enum:["cse,ece,mme,ce,me,ee"]  --mark all branch
+      default:"CSE",
+      enum:["CSE","ECE","CE","ME","MME","PIE","ECM","EE"]  
     },
     token:{
         type:String, 
