@@ -35,8 +35,10 @@ import Drives from './components/pages/admin/Drives';
 import Companies from './components/pages/admin/Companies';
 import Dashboard from './components/dashboard/admin/Dashboard';
 import Layout from './components/pages/admin/Layout'
+import ProtectedRoutes from './components/ProtectedRoutes';
 //import ProtectedRoute from './components/utils/ProtectedRoutes';
 //import ProtectedRoutes from './components/utils/ProtectedRoutes';
+
 function App() {
  
   // make sure here one token validation code is written and verify the toke
@@ -44,7 +46,8 @@ function App() {
   return (
     <>
 
-     <Router>
+
+<Router>
   <Navbar />
 
   <Routes>
@@ -55,26 +58,28 @@ function App() {
     <Route path="/signup" element={<SignUp />} />
     <Route path="/signin" element={<SignIn />} />
 
-    {/* Protected admin routes */}
-    <Route element={<Outlet />}>
-      <Route path="/admin/dashboard" element={<Dashboard />} />
-      <Route path="/admin/students" element={<Students />} />
-      <Route path="/admin/reports" element={<Reports />} />
-      <Route path="/admin/drives" element={<Drives />} />
-      <Route path="/admin/companies" element={<Companies />} />
+    {/* Protected admin routes wrapped in ProtectedRoutes */}
+    <Route path="/admin" element={<ProtectedRoutes />}>
+      <Route path="dashboard" element={<Dashboard />} />
+      <Route path="students" element={<Students />} />
+      <Route path="reports" element={<Reports />} />
+      <Route path="drives" element={<Drives />} />
+      <Route path="companies" element={<Companies />} />
     </Route>
 
     {/* Student routes */}
-    <Route path="/registrationform" element={<RegistrationForm />} />
-    <Route path="/companydetailscard" element={<CompanyDetailsCard />} />
-    <Route path="/appliedcompanies" element={<AppliedCompanies />} />
-    <Route path="/results" element={<Results />} />
-    <Route path="/upcomingcompanies" element={<UpcomingCompanies />} />
-    <Route path="/markeddate" element={<MarkedDate />} />
-    <Route path="/studentdashboard" element={<StudentDashboard />} />
+    <Route path='/student' element={<ProtectedRoutes/>}>
+      <Route path="registrationform" element={<RegistrationForm />} />
+    <Route path="companydetailscard" element={<CompanyDetailsCard />} />
+    <Route path="appliedcompanies" element={<AppliedCompanies />} />
+    <Route path="results" element={<Results />} />
+    <Route path="upcomingcompanies" element={<UpcomingCompanies />} />
+    <Route path="markeddate" element={<MarkedDate />} />
+    <Route path="studentdashboard" element={<StudentDashboard />} />
+    </Route>
+    
   </Routes>
 </Router>
-
 
     </>
   )
