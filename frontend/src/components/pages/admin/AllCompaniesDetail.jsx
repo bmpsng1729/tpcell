@@ -18,7 +18,7 @@ function AllCompaniesDetail() {
 
       const data = await response.json();
       setCompanies(data.allCompany); // Correctly update state with company array
-      console.log(data.allCompany);
+      // console.log(data.allCompany);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }

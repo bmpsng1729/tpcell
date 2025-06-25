@@ -11,7 +11,8 @@ const Navbar = () => {
   const navigate=useNavigate();
 // navigate to 
  const handleProfileClick=()=>{
-     if(userdata.accountType.accountType==='admin'){
+ // alert(userdata.accountType);
+     if(userdata.accountType=="admin"){
       navigate("/admin/dashboard");
      }
      else{

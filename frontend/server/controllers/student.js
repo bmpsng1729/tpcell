@@ -36,7 +36,7 @@ exports.totalStudent=async(req,res)=>{
          // isko banana hai
 //it will return all the student greater than a provided student
 exports.cgpaBasedStudent=async(req,res)=>{
-    console.log(req.params);
+    // console.log(req.params);
      const minCgpa=parseInt(req.query.cgpa,10);
   
     
@@ -51,8 +51,8 @@ exports.cgpaBasedStudent=async(req,res)=>{
 
             })
          }
-         console.log("cgpa based student",students);
-         // return a succesfull result
+        //  console.log("cgpa based student",students);
+        //  // return a succesfull result
          return res.status(200).json({
             message:"cgpa based student fetched successfully",
             success:true,
@@ -73,10 +73,10 @@ exports.sendOaLink = async (req, res) => {
         const cgpa = parseFloat(req.query.cgpa); // Better to use parseFloat for decimal CGPAs
         const branch = ["cse"]; // You can make this dynamic later (from req.query or req.body)
 
-        console.log("cgpa", cgpa);
+        // console.log("cgpa", cgpa);
 
         const batch = new Date().getFullYear() - 3;
-        console.log("batch", batch);
+        // console.log("batch", batch);
 
         if (!cgpa || !branch || isNaN(cgpa)) {
             console.log("admin has not provided cgpa or branch to send the OA link");
@@ -101,7 +101,7 @@ exports.sendOaLink = async (req, res) => {
             }
         );
 
-        console.log("emails found:", students);
+        // console.log("emails found:", students);
 
         if (students.length === 0) {
             return res.status(404).json({
@@ -172,8 +172,8 @@ exports.annualReport = async (req, res) => {
       };
     });
 
-    console.log(report);
-    console.log("students",students);
+    // console.log(report);
+    // console.log("students",students);
     res.status(200).json({
       success: true,
       batch: currentBatch,

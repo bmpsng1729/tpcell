@@ -4,11 +4,11 @@ const placedStudent=require("../models/placedStudent");
 
 exports.createDepartment = async (req, res) => {
   try {
-    console.log("hello bhai");
+    // console.log("hello bhai");
     const { deptName, facultyInchargeEmail } = req.body;
 
     if (!deptName || !facultyInchargeEmail) {
-      console.log("Either department name or faculty incharge is not provided");
+      // console.log("Either department name or faculty incharge is not provided");
       return res.status(400).json({
         message: "Dear admin, you have not provided all details. Please fill and try again.",
         success: false,
@@ -16,7 +16,7 @@ exports.createDepartment = async (req, res) => {
     }
 
     // Check if department already exists
-    console.log("hello bhai2");
+    // console.log("hello bhai2");
     const isDeptExist = await department.find({ deptName: deptName });
     if (isDeptExist.length !== 0) {
       console.log("Department already exists");
@@ -64,7 +64,7 @@ exports.averagePackageBranchwise=async(req,res)=>{
 
        const batch= new Date().getFullYear()-4; // baad me isko 4 kar denna 
        // chai ,av data hm isi ka daale hai isliye
-       console.log(batch)
+      //  console.log(batch)
        const result = await department.aggregate([
         {
           $lookup: {
@@ -139,7 +139,7 @@ exports.averagePackageBranchwise=async(req,res)=>{
       
       
  if(result.length===0){
-    console.log("error in finding avg branchwise",result);
+    // console.log("error in finding avg branchwise",result);
    
         return res.status(400).json({
             message:"error in fetching all student some error inside controller "

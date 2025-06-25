@@ -43,7 +43,7 @@ exports.registerCompany = async (req, res) => {
 // send a sucessfull mail
 
       // return sucessfull message
-      console.log("registered companies",regCompany);
+    //   console.log("registered companies",regCompany);
         return res.status(200).json({
             message:"Dear customer,company Registration Successfull",
             sucess:true,
@@ -86,7 +86,7 @@ exports.showAllVisitedCompanyYearwise=async(req,res)=>{
         
     }
     // validate 
-    console.log(allCompany);
+    // console.log(allCompany);
 
     // now show the all company 
     // send a successull result
@@ -118,7 +118,7 @@ exports.topRecruitingCompanies=async(req,res)=>{
             success:false
         });
     }
-        console.log("top companies->",companies);
+        // console.log("top companies->",companies);
 
         // return a successfull response
         return res.status(200).json({

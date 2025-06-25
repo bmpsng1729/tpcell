@@ -1,6 +1,7 @@
 const express=require("express");
 const router=express.Router();
 const{createDepartment,averagePackageBranchwise,placementPercentageBranchwise,lastFourBatchwiseCount,lastFourBatchAverage}=require("../controllers/department");
+const {auth,isAdmin} =require("../middlewares/auth");
 
 router.post("/createdepartment",createDepartment);
 router.get("/averagepackagebranchwise",averagePackageBranchwise);

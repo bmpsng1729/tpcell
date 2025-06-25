@@ -20,7 +20,7 @@ function PieChart() {
           toast.error("there is an issue in api call for pie chart data");
          }
          const jsonData=await response.json();
-         console.log("jsonddata.precessedData",jsonData);
+        //  console.log("jsonddata.precessedData",jsonData);
          setChartData(jsonData.processedData
          );
          toast.success(jsonData.message || "pie chart data fetched successfully")

@@ -20,7 +20,6 @@ function TopRecruitingCompanies() {
 
         const data = await response.json();
         setTopCompanies(data.companies);
-        console.log("top recruiting companies", data);
       } catch (err) {
         toast.error("Error in finding top recruiting companies");
         console.error("Fetch error:", err);

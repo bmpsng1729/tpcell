@@ -6,12 +6,13 @@ const User=require("../models/User");
 exports.auth=async(req,res,next)=>{
     try{
        // extract jwt token from the body/header(we will add in header)
+       console.log(req.cookies);
        const token=req.cookies.token || req.body.token || req.header("Authorization").replace("Bearer","");
-
+    console.log("token",token);
        if(!token){
         return res.status(401).json({
             success:false,
-            message:"error in token verification,token missing!"
+            message:"error in token verification,token missing!",
         });
 
        }
@@ -37,6 +38,7 @@ exports.auth=async(req,res,next)=>{
        // return the response
     }
     catch(err){
+        console.log("error in auth");
  return res.status(400).json({
     sucess:false,
     message:"there is a problem in token verification",
@@ -86,8 +88,9 @@ exports.isAdmin=async(req,res,next)=>{
                 message:"this is protected route for admin,select your account type carefully"
             });
             // now student is verify
-            next();
+         
          }
+            next();
     }
     catch(err){
         return res.status(400).json({

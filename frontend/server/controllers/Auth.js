@@ -33,9 +33,9 @@ const { data } = require("react-router-dom");
         // special for student user
         if(accountType==="student"){
           if( !cgpa || !batch || !branch){
-            console.log(cgpa)
-             console.log(batch)
-              console.log(branch)
+            // console.log(cgpa)
+            //  console.log(batch)
+            //   console.log(branch)
             
             return res.status(400).json(
               {
@@ -185,7 +185,7 @@ const { data } = require("react-router-dom");
                }
                // check user of the email is exist or not
                const user=await User.findOne({email:email});
-               console.log("printing the data come from the db",user);
+              //  console.log("printing the data come from the db",user);
                // if user not exist tell to register
                if(!user){
                     return res.status(401).json(
@@ -216,9 +216,9 @@ const { data } = require("react-router-dom");
                     }
 
                     // send email of sucessfully logged in
-                     const mailRes=mailSender(email,"about login to the tpcell","congratulation ,you are sucessfully Logged in");
+                    //  const mailRes=mailSender(email,"about login to the tpcell","congratulation ,you are sucessfully Logged in");
 
-                     console.log("mailresponse:,mail sent sucessfully",mailRes);
+                    //  console.log("mailresponse:,mail sent sucessfully",mailRes);
                      
                     res.cookie("token", token, options).status(200).json({
                       success: true,

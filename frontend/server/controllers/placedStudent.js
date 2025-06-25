@@ -20,7 +20,7 @@ exports.markPlaced=async(req,res)=>{
             {new:true,returnDocument:"after"}
          )
          if(!user){
-            console.log("you have not entered a valid user email,or student has not registered into the placement website");
+            // console.log("you have not entered a valid user email,or student has not registered into the placement website");
             return res.status.json({
                 message:"user not  exist. probably you have entered a invalid emai or user has not registered to the placement website ye ",
                 success:false
@@ -63,7 +63,7 @@ exports.markPlaced=async(req,res)=>{
 
                 }
                );
-               console.log("placed mark student placement details-",placedMarkDetails)
+              //  console.log("placed mark student placement details-",placedMarkDetails)
                
         // check into the company table the particular company exist or not ,if not then show a message to the coordinator that add the  company-do later
             
@@ -75,7 +75,7 @@ exports.markPlaced=async(req,res)=>{
          });
     }
     catch(err){
-        console.log("there is an error in marking placed:error-",err);
+        // console.log("there is an error in marking placed:error-",err);
         return res.status(400).json({
             message:"there is an error in marking placed to student",
             success:false,
@@ -130,7 +130,7 @@ exports.showAllPlacedStudentBatchwise=async(req,res)=>{
                     success:false,
                 });
               }
-              console.log("all the placed student of particular year and branch",allStudent);
+              // console.log("all the placed student of particular year and branch",allStudent);
               return res.status(200).json({
                 message:"got all  placed student of the given branch",
                 success:true,
@@ -151,18 +151,18 @@ exports.showAllPlacedStudentBatchwise=async(req,res)=>{
 exports.topPackageStudents = async (req, res) => {
     try {
         // Extract query params
-        console.log("batch from query",req.query.batch);
+        // console.log("batch from query",req.query.batch);
   const batch= parseInt(req.query.batch )|| new Date().getFullYear()-4;
         //const topStudentsCount = parseInt(req.query.topStudentsCount, 10);
 
         const topStudentsCount=parseInt(req.query.topStudentsCount, 10) || 12
 
-        console.log("Year:", batch);
-        console.log("Count:", topStudentsCount);
+        // console.log("Year:", batch);
+        // console.log("Count:", topStudentsCount);
 
         // Validate input
         if (!batch || !topStudentsCount) {
-            console.log("Missing batch or topStudentsCount");
+            // console.log("Missing batch or topStudentsCount");
             return res.status(400).json({
                 message: "Missing batch year or number of students",
                 success: false,
@@ -197,7 +197,7 @@ exports.topPackageStudents = async (req, res) => {
 
         // Check if students were found
         if (!allStudent || allStudent.length === 0) {
-            console.log("No students found for this batch");
+            // console.log("No students found for this batch");
             return res.status(404).json({
                 message: `no student found for${batch}`,
                 success: false
@@ -222,7 +222,7 @@ exports.totalPlacedStudent=async(req,res)=>{
     try{ 
         // we have to show all the student placed in current 4th year
             const year=parseInt(req.query.year,10);
-            console.log("year->",year);
+            // console.log("year->",year);
 
             const batch=year-3;
             const allStudent=await User.find({isplaced:true,batch:batch});
@@ -241,7 +241,7 @@ exports.totalPlacedStudent=async(req,res)=>{
             });
     }
     catch(err){
-         console.log("there is an error in the finding the total placed student");
+        //  console.log("there is an error in the finding the total placed student");
          return res.status(400).json({
             message:"there is an error in the finding the total placed student",
             success:false,
@@ -285,7 +285,7 @@ exports.averagePackageYearwise=async(req,res)=>{
         //find all student of the batch and find average
         //return the successfull result
         const batch=parseInt(req.query.batch,10)|| new Date().getFullYear()-4;
-        console.log(batch);
+        // console.log(batch);
         const avgPlacement = await placedStudent.aggregate([
             {
               $lookup: {
@@ -312,7 +312,7 @@ exports.averagePackageYearwise=async(req,res)=>{
             }
           ]);
           
-         console.log("average placement");
+        //  console.log("average placement");
          
          if(avgPlacement.length===0){
             return res.status(401).json({
@@ -407,7 +407,7 @@ console.log("data",data);
  })
     }
     catch(err){
-        console.log("there is an error in finding the pie-chart details",err);
+        // console.log("there is an error in finding the pie-chart details",err);
 
         return res.status(400).json({
             message:"there is an error in finding pie-chart data",
