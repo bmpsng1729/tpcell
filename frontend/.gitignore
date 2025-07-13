@@ -23,5 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 .env
-vite.config.json
+server/.env
+server/package-lock.json
+server/node_modules
+server/package.json
 package-lock.json
