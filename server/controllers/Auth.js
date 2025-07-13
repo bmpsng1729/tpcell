@@ -4,12 +4,10 @@ const mongoose=require("mongoose");
  const mailSender = require("../utils/mailSender");
  const OTP=require("../models/Otp");
  const Profile=require("../models/Profile");
-const { BiAccessibility } = require("react-icons/bi");
 const jwt=require("jsonwebtoken");
  const otpTemplate=require("../mail/emailVerificatioTemplate");
 const { findOne } = require("../models/department");
 const department=require("../models/department");
-const { data } = require("react-router-dom");
 
 
 
