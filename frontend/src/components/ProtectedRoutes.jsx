@@ -1,18 +1,22 @@
 import React, { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Navigate, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-function ProtectedRoutes() {
-  const token = useSelector((state) => state.auth.token);
-  const navigate = useNavigate();
+const ProtectedRoute = ({ allowedRoles }) => {
+ const isLoggedin = useSelector((state) => state.auth.isLoggedin);
+ const userData =useSelector((state)=>state.auth.userData);
+ console.log("user data",userData);
 
-  useEffect(() => {
-    if (!token) {
-      navigate("/signup");
-    }
-  }, [token, navigate]);
+  if (!isLoggedin || !userData) {
+    return <Navigate to="/signin" replace />;
+  }
+
+  if (!allowedRoles.includes(userData.accountType)) {
+    return <Navigate to="/" replace />;
+  }
 
   return <Outlet />;
-}
+};
 
-export default ProtectedRoutes;
+export default ProtectedRoute;
+

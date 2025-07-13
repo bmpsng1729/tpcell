@@ -24,7 +24,7 @@ function SignIn() {
     try {
       // const session = await authService.login(data)   /// make a backend call
 
-      const response = await fetch("http://localhost:4000/api/v1/auth/login", {
+      const response = await fetch("/api/v1/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,8 +33,7 @@ function SignIn() {
       });
 
       const datas = await response.json();
-
-
+     console.log("data in the login",datas);
 
       if (!response.ok) {
         toast.error(datas.message || "something went wrong! try again");
@@ -43,17 +42,11 @@ function SignIn() {
 
       else {
        
-        dispatch(authLogin(datas));
-    // saving token  into the localstorage
-    console.log("token", JSON.stringify(datas.token));
-        localStorage.setItem("token", JSON.stringify(datas.token));
-         localStorage.setItem("userData", JSON.stringify(datas.user));
-         console.log("userData",data.user);
-        
+        dispatch(authLogin(datas));   
         toast.success('🦄 logged in successfully');
 
         if (datas.user.accountType === 'student') {
-          navigate('/studentdashboard')
+          navigate('/student/dashboard')
         }
         if (datas.user.accountType === "admin") {
           navigate('/admin/dashboard');

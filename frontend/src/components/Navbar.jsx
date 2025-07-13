@@ -1,23 +1,21 @@
 import React from "react";
 import nitlogo from "./images/nit logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import ProfileButton from "./pages/ProfileButton";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { IoMdLogOut } from "react-icons/io";
+import {logout} from "../slices/authSlice"
 
 
 const Navbar = () => {
-  const userdata=useSelector((state)=>state.auth.userData);
- // console.log(userdata.accountType);
-  const navigate=useNavigate();
-// navigate to 
- const handleProfileClick=()=>{
- // alert(userdata.accountType);
-     if(userdata.accountType=="admin"){
-      navigate("/admin/dashboard");
-     }
-     else{
-      navigate("/studentdashboard");
-     }
+   const dispatch=useDispatch();
+  const userdata = useSelector((state) => state.auth.userData);
+  const isLoggedin = useSelector((state) => state.auth.isLoggedin);
+  // console.log(userdata.accountType);
+  const navigate = useNavigate();
+  // navigate to 
+  const handleProfileClick = () => {
+    console.log("logout is called");
+    dispatch(logout());
   }
 
   const token = useSelector((state) => state.auth.token);
@@ -29,7 +27,7 @@ const Navbar = () => {
           <div className="flex items-center gap-2">
             <img src={nitlogo} alt="NIT Logo" className="h-12 w-12 rounded-xl" />
             <span className="text-lg md:text-xl font-semibold">
-              PLACEMENT CELL, NIT JAMSHEDPUR 
+              PLACEMENT CELL, NIT JAMSHEDPUR
             </span>
           </div>
 
@@ -49,12 +47,16 @@ const Navbar = () => {
             </Link>
 
             {/* Add profile button on right */}
-            {
-              token && <button className="bg-red-500 cursor-pointer"  onClick={handleProfileClick}>
-                <ProfileButton />
-              </button> 
+            {/* TODO::conditional rendering */}
+            {isLoggedin &&
+              <button
+                className="flex items-center justify-center text-white bg-red-500 hover:bg-red-600 rounded-full p-2 transition duration-200 shadow-md cursor-pointer"
+                onClick={handleProfileClick}
+              >
+                <IoMdLogOut className="w-10 h-5" />
+              </button>
             }
-            
+
           </div>
         </div>
       </div>

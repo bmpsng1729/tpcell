@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { toast } from "react-toastify";
-import{login} from "../slices/authSlice";
+import{signup} from "../slices/authSlice";
 import { Button, Input, Logo, Select } from '../index'
 
 function Signup() {
@@ -22,21 +22,23 @@ function Signup() {
     try {
       // const userData = await authService.createAccount(data)  // make a bd call here
 
-      const userData = await fetch("http://localhost:4000/api/v1/auth/signup", {
+      const userData = await fetch("/api/v1/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
        body: JSON.stringify(data)
       });
-
+  
       const datas = await userData.json();
+      console.log(datas);
 
       if (!userData.ok) {
         toast.error(datas.message || "Something went wrong");
 
       } else {
-          dispatch(login(userData));
+        console.log("data going to slice:",datas.user);
+          dispatch(signup(datas.user));
       navigate("/signin")
         toast.success("Signup successful");
       

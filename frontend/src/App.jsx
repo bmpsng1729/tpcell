@@ -36,53 +36,52 @@ import Companies from './components/pages/admin/Companies';
 import Dashboard from './components/dashboard/admin/Dashboard';
 import Layout from './components/pages/admin/Layout'
 import ProtectedRoutes from './components/ProtectedRoutes';
+import PageNotFound from './components/PageNotFound';
 //import ProtectedRoute from './components/utils/ProtectedRoutes';
 //import ProtectedRoutes from './components/utils/ProtectedRoutes';
 
 function App() {
- 
-  // make sure here one token validation code is written and verify the toke
-
   return (
-    <>
+    <Router>
+      <Navbar />
 
+      <Routes>
+        {/* Public routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/bronchure" element={<Bronchure />} />
+        <Route path="/dirmessage" element={<Dirmessage />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
 
-<Router>
-  <Navbar />
+        {/* Admin Protected Routes */}
+        <Route element={<ProtectedRoutes allowedRoles={["admin"]} />}>
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/students" element={<Students />} />
+          <Route path="/admin/reports" element={<Reports />} />
+          <Route path="/admin/drives" element={<Drives />} />
+          <Route path="/admin/companies" element={<Companies />} />
+        </Route>
 
-  <Routes>
-    {/* Public routes */}
-    <Route path="/" element={<Home />} />
-    <Route path="/bronchure" element={<Bronchure />} />
-    <Route path="/dirmessage" element={<Dirmessage />} />
-    <Route path="/signup" element={<SignUp />} />
-    <Route path="/signin" element={<SignIn />} />
+        {/* Student Protected Routes */}
+        <Route element={<ProtectedRoutes allowedRoles={["student"]} />}>
+          <Route path="/student/dashboard" element={<StudentDashboard />} />
+          <Route path="/student/registrationform" element={<RegistrationForm />} />
+          <Route path="/student/appliedcompanies" element={<AppliedCompanies />} />
+          <Route path="/student/results" element={<Results />} />
+          <Route path="/student/upcomingcompanies" element={<UpcomingCompanies />} />
+          <Route path="/student/markeddate" element={<MarkedDate />} />
+          <Route path="/student/companydetailscard" element={<CompanyDetailsCard />} />
+        </Route>
 
-    {/* Protected admin routes wrapped in ProtectedRoutes */}
-    <Route path="/admin" element={<ProtectedRoutes />}>
-      <Route path="dashboard" element={<Dashboard />} />
-      <Route path="students" element={<Students />} />
-      <Route path="reports" element={<Reports />} />
-      <Route path="drives" element={<Drives />} />
-      <Route path="companies" element={<Companies />} />
-    </Route>
-
-    {/* Student routes */}
-    <Route path='/student' element={<ProtectedRoutes/>}>
-      <Route path="registrationform" element={<RegistrationForm />} />
-    <Route path="companydetailscard" element={<CompanyDetailsCard />} />
-    <Route path="appliedcompanies" element={<AppliedCompanies />} />
-    <Route path="results" element={<Results />} />
-    <Route path="upcomingcompanies" element={<UpcomingCompanies />} />
-    <Route path="markeddate" element={<MarkedDate />} />
-    <Route path="studentdashboard" element={<StudentDashboard />} />
-    </Route>
-    
-  </Routes>
-</Router>
-
-    </>
-  )
+        {/* Recruiter Protected Routes (if needed) */}
+        <Route element={<ProtectedRoutes allowedRoles={["recruiter"]} />}>
+          <Route path="/recruiter/dashboard" element={<div>Recruiter Dashboard</div>} />
+          {/* other recruiter-specific routes */}
+        </Route>
+        <Route  path='*' element={<PageNotFound/>}/>
+      </Routes>
+    </Router>
+  );
 }
 
 export default App

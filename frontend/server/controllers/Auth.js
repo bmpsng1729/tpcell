@@ -152,6 +152,12 @@ const { data } = require("react-router-dom");
       
 
       // now if the user is student then push him into the department of the student
+      user.password=undefined;
+       user._id=undefined;
+       user.additionalDetails=undefined;
+       user.token=undefined;
+       user.__v=undefined;
+       user.resetPasswordExpires=undefined;
       return res.status(200).json(
         {
             sucess:true,
@@ -199,7 +205,7 @@ const { data } = require("react-router-dom");
                  // match the password
                  if (await bcrypt.compare(password, user.password)) {
                     const token = jwt.sign(
-                      { email: user.email, id: user._id, role: user.role },
+                      { email: user.email, id: user._id,role: user.role },
                       process.env.JWT_SECRET,
                       {
                         expiresIn: "24h",

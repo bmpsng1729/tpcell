@@ -24,7 +24,8 @@ import ContactTnPCell from "./ContactTnPCell";
 import { useSelector } from "react-redux";
 
 const Home = () => {
-  const token = useSelector((state) => state.auth.token);
+  const isLoggedin = useSelector((state) => state.auth.isLoggedin);
+  const isRegistered = useSelector((state) => state.auth.isRegistered);
   // console.log("token from home",token)
   return (
     <>
@@ -51,23 +52,33 @@ const Home = () => {
           {/* Right Section with Gradient Background */}
           <div className="w-full md:w-1/2 flex flex-col items-center gap-4 p-6 rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-300">
             {/* // do conditional rendering of this page */}
-            {
-              !token && <div className="flex flex-col items-center justify-center gap-6">
-                <Link to="/signup" className="w-48">
-                  <button className="w-full bg-blue-500 text-white py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-600 transition-transform transform hover:scale-105 duration-300 shadow-md">
-                    <PiStudentFill className="text-2xl" />
-                    <span className="text-lg font-semibold">Sign Up</span>
-                  </button>
-                </Link>
-                <Link to="/signin" className="w-48">
-                  <button className="w-full bg-blue-500 text-white py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-600 transition-transform transform hover:scale-105 duration-300 shadow-md">
-                    <PiStudentFill className="text-2xl" />
-                    <span className="text-lg font-semibold">Log In</span>
-                  </button>
-                </Link>
-              </div>
+            <div className="flex flex-col items-center justify-center gap-6">
+              {
+                !isRegistered && (
+                  <Link to="/signup" className="w-48">
+                    <button className="w-full bg-blue-500 text-white py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-600 transition-transform transform hover:scale-105 duration-300 shadow-md">
+                      <PiStudentFill className="text-2xl" />
+                      <span className="text-lg font-semibold">Sign Up</span>
+                    </button>
+                  </Link>
+                )
+              }
+              {
+                !isLoggedin && (
+                  <Link to="/signin" className="w-48">
+                    <button className="w-full bg-blue-500 text-white py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-600 transition-transform transform hover:scale-105 duration-300 shadow-md">
+                      <PiStudentFill className="text-2xl" />
+                      <span className="text-lg font-semibold">Log In</span>
+                    </button>
+                  </Link>
+                )
+              }
 
-            }
+
+
+            </div>
+
+
 
           </div>
         </div>

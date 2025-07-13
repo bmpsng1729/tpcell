@@ -8,19 +8,19 @@ const StudentDashboard = () => {
     <div className="w-full h-screen flex bg-gray-100 mt-14">
       {/* Sidebar */}
       <div className="w-1/5 bg-white shadow-lg p-5 flex flex-col space-y-4">
-        <Link to="/companydetailscard">
+        <Link to="/student/companydetailscard">
           <button className="py-3 w-full bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-center">Preparation</button>
         </Link>
-        <Link to="/appliedcompanies">
+        <Link to="/student/appliedcompanies">
           <button className="py-3 w-full bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-center">Applied Companies</button>
         </Link>
-        <Link to="/upcomingcompanies">
+        <Link to="/student/upcomingcompanies">
           <button className="py-3 w-full bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-center">Upcoming Companies</button>
         </Link>
-        <Link to="/results">
+        <Link to="/student/results">
           <button className="py-3 w-full bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-center">Results</button>
         </Link>
-        <Link to="/markeddate">
+        <Link to="/student/markeddate">
           <button className="py-3 w-full bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-center">Marked Dates</button>
         </Link>
       </div>
