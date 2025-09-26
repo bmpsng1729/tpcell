@@ -49,27 +49,17 @@ const BranchStats = () => {
                 <th className="px-4 py-2 text-left text-xs font-medium text-secondary-500 uppercase">Total </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-secondary-200">
-              {placedBranch.map((branch, index) => (
-                <tr key={index}>
-                  <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-secondary-900">
-                    {branch.department}
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-sm text-primary-600 font-semibold">
-                    {branch.averageCTC}
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-sm text-green-600">
-                    {branch.maxCTC}
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-sm text-red-600">
-                    {branch.minCTC}
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-sm text-red-600">
-                    {branch.totalPlacements}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+           <tbody>
+  {Array.isArray(placedBranch) && placedBranch.map((branch, index) => (
+    <tr key={index}>
+      <td>{branch?.department ?? "-"}</td>
+      <td>{branch?.averageCTC ?? "-"}</td>
+      <td>{branch?.maxCTC ?? "-"}</td>
+      <td>{branch?.minCTC ?? "-"}</td>
+      <td>{branch?.totalPlacements ?? "-"}</td>
+    </tr>
+  ))}
+</tbody>
           </table>
         </div>
       </div>

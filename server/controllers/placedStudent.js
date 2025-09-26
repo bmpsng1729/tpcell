@@ -155,7 +155,7 @@ exports.topPackageStudents = async (req, res) => {
   const batch= parseInt(req.query.batch )|| new Date().getFullYear()-4;
         //const topStudentsCount = parseInt(req.query.topStudentsCount, 10);
 
-        const topStudentsCount=parseInt(req.query.topStudentsCount, 10) || 12
+        const topStudentsCount=parseInt(req.query.topStudentsCount, 10) || 1;
 
         // console.log("Year:", batch);
         // console.log("Count:", topStudentsCount);
@@ -199,7 +199,7 @@ exports.topPackageStudents = async (req, res) => {
         if (!allStudent || allStudent.length === 0) {
             // console.log("No students found for this batch");
             return res.status(404).json({
-                message: `no student found for${batch}`,
+                message: `no student found for ${batch}`,
                 success: false
             });
         }
@@ -224,7 +224,7 @@ exports.totalPlacedStudent=async(req,res)=>{
             const year=parseInt(req.query.year,10);
             // console.log("year->",year);
 
-            const batch=year-3;
+            const batch=year-4;
             const allStudent=await User.find({isplaced:true,batch:batch});
             if(allStudent.length===0){
                 return res.status(400).json({
