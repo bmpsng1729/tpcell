@@ -22,7 +22,8 @@ function Signup() {
     try {
       // const userData = await authService.createAccount(data)  // make a bd call here
 
-      const userData = await fetch("/api/v1/auth/signup", {
+      const API_URL = import.meta.env.VITE_BASE_URL || "";
+      const userData = await fetch(`${API_URL}/api/v1/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

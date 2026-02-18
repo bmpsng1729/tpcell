@@ -24,7 +24,8 @@ function SignIn() {
     try {
       // const session = await authService.login(data)   /// make a backend call
 
-      const response = await fetch("/api/v1/auth/login", {
+      const API_URL = import.meta.env.VITE_BASE_URL || "";
+      const response = await fetch(`${API_URL}/api/v1/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

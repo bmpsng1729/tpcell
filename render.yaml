@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: tpcell-backend
+    env: node
+    region: singapore
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm run dev
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: MONGODB_URL
+        value: ${MONGODB_URL}
+      - key: JWT_SECRET
+        value: ${JWT_SECRET}
+      - key: MAIL_HOST
+        value: smtp.gmail.com
+      - key: MAIL_USER
+        value: ${MAIL_USER}
+      - key: MAIL_PASS
+        value: ${MAIL_PASS}
+      - key: CLOUD_NAME
+        value: ${CLOUD_NAME}
+      - key: API_KEY
+        value: ${API_KEY}
+      - key: API_SECRET
+        value: ${API_SECRET}
+
+  - type: web
+    name: tpcell-frontend
+    env: static
+    region: singapore
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_BASE_URL
+        value: https://tpcell-backend.onrender.com
