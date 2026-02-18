@@ -42,7 +42,7 @@ function SignIn() {
 
       else {
        
-        dispatch(authLogin(datas));   
+        dispatch(authLogin({user: datas.user, token: datas.token}));   
         toast.success('🦄 logged in successfully');
 
         if (datas.user.accountType === 'student') {

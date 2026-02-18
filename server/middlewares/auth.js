@@ -53,9 +53,9 @@ exports.isStudent = async (req, res, next) => {
                 sucess: false,
                 message: "selected account type is not student,select your account type carefully"
             });
-            // now student is verify
-            next();
         }
+        // now student is verify
+        next();
     }
     catch (err) {
         return res.status(400).json({
@@ -79,9 +79,8 @@ exports.isAdmin = async (req, res, next) => {
                 sucess: false,
                 message: "this is protected route for admin,select your account type carefully"
             });
-            // now student is verify
-
         }
+        // now student is verify
         next();
     }
     catch (err) {
@@ -106,9 +105,17 @@ exports.isRecruiter = async (req, res, next) => {
                 sucess: false,
                 message: "this is protected route for rectuiter,select your account type carefully"
             });
-            // now student is verify
-            next();
         }
+        // now student is verify
+        next();
+    }
+    catch (err) {
+        return res.status(400).json({
+            message: "there is a problem in recruiter verification,invalid credential",
+            success: false
+        })
+    }
+}
     }
     catch (err) {
         return res.status(400).json({
