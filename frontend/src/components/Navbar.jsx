@@ -42,6 +42,12 @@ const Navbar = () => {
             <Link to="/dirmessage" className="hover:text-yellow-400 transition">
               Director's Message
             </Link>
+            <Link to="/placement-calendar" className="hover:text-yellow-400 transition">
+              Calendar
+            </Link>
+            <Link to="/interview-wall" className="hover:text-yellow-400 transition">
+              Experiences
+            </Link>
             <Link to="/contact" className="hover:text-yellow-400 transition">
               Contact Us
             </Link>

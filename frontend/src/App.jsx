@@ -5,7 +5,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Outlet,
+  Outlet, 
 } from "react-router-dom";
 // import './App.css'
 import Signup from './components/Signup';
@@ -21,6 +21,8 @@ import AppliedCompanies from './components/pages/student/AppliedCompanies';
 import Results from './components/pages/student/Results';
 import UpcomingCompanies from './components/pages/student/UpcomingCompanies';
 import MarkedDate from './components/pages/student/MarkedDate';
+import PlacementCalendar from './components/pages/student/PlacementCalendar';
+import InterviewExperienceWall from './components/pages/student/InterviewExperienceWall';
 import StudentDashboard from './components/pages/StudentDashboard';
 import SignUp from './components/Signup';
 import SignIn from './components/SignIn';
@@ -52,6 +54,8 @@ function App() {
         <Route path="/dirmessage" element={<Dirmessage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/placement-calendar" element={<PlacementCalendar />} />
+        <Route path="/interview-wall" element={<InterviewExperienceWall />} />
 
         {/* Admin Protected Routes */}
         <Route element={<ProtectedRoutes allowedRoles={["admin"]} />}>
@@ -80,8 +84,8 @@ function App() {
         </Route>
         <Route  path='*' element={<PageNotFound/>}/>
       </Routes>
-    </Router>
+    </Router> 
   );
-}
+} 
 
 export default App

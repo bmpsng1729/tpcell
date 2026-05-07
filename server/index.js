@@ -1,7 +1,7 @@
 const express=require('express');
 const app=express();
 const db=require("./config/database");   
-const port=process.env.PORT || 4000;
+const port=process.env.PORT || 5000;
 
 const userRoutes=require("./routes/User")
 const profileRoutes=require("./routes/Profile");
@@ -25,7 +25,7 @@ db.connect();
 // middleware
 
 const corsOptions = {
-    origin:"http://localhost:5173",
+    origin:"http://localhost:5174",
     credentials:true,
     optionSuccessStatus:200,
    methods:"GET,HEAD,PUT,PATCH,POST,DELETE",
