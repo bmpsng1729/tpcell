@@ -43,6 +43,14 @@ function StudentDetails() {
       color: { bg: 'bg-gradient-to-br from-amber-500 to-orange-600', text: 'text-amber-500' },
       description: 'Across all branches',
     },
+    {
+      title: 'Tabc',
+      value: '0', // default value
+      change: 12.5,
+      icon: ChartBarIcon,
+      color: { bg: 'bg-gradient-to-br from-blue-500 to-indigo-600', text: 'text-blue-500' },
+      description: 'Placements this academic year',
+    },
   ]);
 
   useEffect(() => {

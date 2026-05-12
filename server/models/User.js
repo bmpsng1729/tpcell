@@ -34,7 +34,7 @@
     },
     branch:{
       type:String,
-      default:"CSE",
+      default:"",
       enum:["CSE","ECE","CE","ME","MME","PIE","ECM","EE"]  
     },
     token:{

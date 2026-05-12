@@ -37,8 +37,13 @@ import Dashboard from './components/dashboard/admin/Dashboard';
 import Layout from './components/pages/admin/Layout'
 import ProtectedRoutes from './components/ProtectedRoutes';
 import PageNotFound from './components/PageNotFound';
+
+import {MarkPlaced} from './index';
 //import ProtectedRoute from './components/utils/ProtectedRoutes';
 //import ProtectedRoutes from './components/utils/ProtectedRoutes';
+
+// recruiter
+  import {AdminEmailDashboard,RegisterCompany} from "./index"
 
 function App() {
   return (
@@ -60,6 +65,8 @@ function App() {
           <Route path="/admin/reports" element={<Reports />} />
           <Route path="/admin/drives" element={<Drives />} />
           <Route path="/admin/companies" element={<Companies />} />
+          <Route path="/admin/mark-placed" element={<MarkPlaced />} />
+          <Route path="/admin/register-company" element={<RegisterCompany />} />
         </Route>
 
         {/* Student Protected Routes */}
@@ -74,8 +81,9 @@ function App() {
         </Route>
 
         {/* Recruiter Protected Routes (if needed) */}
-        <Route element={<ProtectedRoutes allowedRoles={["recruiter"]} />}>
-          <Route path="/recruiter/dashboard" element={<div>Recruiter Dashboard</div>} />
+        <Route element={<ProtectedRoutes allowedRoles={["recruiter","admin"]} />}>
+          <Route path="/recruiter/dashboard" element={<AdminEmailDashboard />} />
+
           {/* other recruiter-specific routes */}
         </Route>
         <Route  path='*' element={<PageNotFound/>}/>

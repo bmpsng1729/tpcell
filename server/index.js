@@ -8,6 +8,7 @@ const profileRoutes=require("./routes/Profile");
 const placedStudentsRoutes=require("./routes/placedStudent")
 const departmentRoutes=require("./routes/department");
 const studentsRoutes=require("./routes/students");
+const adminRoutes=require("./routes/admin");
 
 const {connectCloudinary}=require("./config/cloudinary");
 const cors=require("cors");
@@ -55,3 +56,4 @@ app.use("/api/v1/admin",companyRoutes);
 app.use("/api/v1/admin",placedStudentsRoutes);
 app.use("/api/v1/admin",departmentRoutes);
 app.use("/api/v1/admin",studentsRoutes);
+app.use("/api/v1/admin",adminRoutes);

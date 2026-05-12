@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import {
   ChartBarIcon,
   UsersIcon,
@@ -73,6 +74,19 @@ const Dashboard = () => {
       read: true
     },
   ];
+  const tabs = [
+  { key: "overview", path: "admin/dashboard" },
+  { key: "students", path: "admin/students" },
+  { key: "companies", path: "admin/companies" },
+  { key: "drives", path: "admin/drives" },
+  { key: "reports", path: "admin/reports" },
+  { key: "mark placed", path: "admin/mark-placed" },
+  { key: "Register company", path: "admin/register-company" },
+  { key: "contact student", path: "recruiter/dashboard" }
+
+];
+  const navigate = useNavigate();
+
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6 mt-10">
@@ -111,6 +125,7 @@ const Dashboard = () => {
               <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
                 <div className="p-4 border-b border-gray-200 flex justify-between items-center bg-gradient-to-r from-blue-50 to-indigo-50">
                   <h3 className="font-semibold text-gray-800">Notifications</h3>
+                  
                   <button
                     onClick={() => setNotificationsOpen(false)}
                     className="text-gray-400 hover:text-gray-500"
@@ -156,6 +171,7 @@ const Dashboard = () => {
                 </div>
               </div>
             )}
+            
           </div>
 
         </div>
@@ -163,16 +179,23 @@ const Dashboard = () => {
 
       {/* 📊 Dashboard Tabs */}
       <div className="flex space-x-2 mb-6 border-b border-gray-200">
-        {['overview', 'students', 'companies', 'drives', 'reports'].map((tab) => (
-          <button
-            key={tab}
-            className={`px-4 py-2 font-medium rounded-t-lg transition-all ${activeTab === tab ? 'bg-blue-600 text-white shadow-md' : 'text-gray-600 hover:bg-gray-100'}`}
-            onClick={() => setActiveTab(tab)}
-          >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}
-          </button>
-        ))}
-      </div>
+      {tabs.map((t) => (
+        <button
+          key={t.key}
+          className={`px-4 py-2 font-medium rounded-t-lg transition-all ${
+            activeTab === t.key
+              ? "bg-blue-600 text-white shadow-md"
+              : "text-gray-600 hover:bg-gray-100"
+          }`}
+          onClick={() => {
+            setActiveTab(t.key);
+            navigate(`/${t.path}`);
+          }}
+        >
+          {t.key.charAt(0).toUpperCase() + t.key.slice(1)}
+        </button>
+      ))}
+    </div>
        <StudentDetails/>
       {/* 📈 Main Content Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">

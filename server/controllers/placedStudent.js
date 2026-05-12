@@ -13,12 +13,14 @@ exports.markPlaced=async(req,res)=>{
                     message:"you have the all required details,"
                 });
               }
+        
         //find the student,update the isPlaced and return the updated values
          const user=await User.findOneAndUpdate(
             {email:email,accountType:"student"},
              {$set:{isplaced:true}},
             {new:true,returnDocument:"after"}
          )
+
          if(!user){
             // console.log("you have not entered a valid user email,or student has not registered into the placement website");
             return res.status.json({
@@ -155,7 +157,7 @@ exports.topPackageStudents = async (req, res) => {
   const batch= parseInt(req.query.batch )|| new Date().getFullYear()-4;
         //const topStudentsCount = parseInt(req.query.topStudentsCount, 10);
 
-        const topStudentsCount=parseInt(req.query.topStudentsCount, 10) || 1;
+        const topStudentsCount=parseInt(req.query.topStudentsCount, 10) || 10;
 
         // console.log("Year:", batch);
         // console.log("Count:", topStudentsCount);

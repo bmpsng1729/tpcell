@@ -6,7 +6,8 @@ const {auth,isAdmin} =require("../middlewares/auth");
 
 // baad me ye wala routes likna hai av ke liye bina authorization ke likha hun
 // !!!!! add authorization at the end
-router.post("/registercompany",auth,registerCompany);
+              // below add auth
+router.post("/registercompany",registerCompany);
 router.get("/showallvisitedcompanyyearwise",showAllVisitedCompanyYearwise);
 router.get("/topcompanies",topRecruitingCompanies);
 
